@@ -6,5 +6,9 @@
 	"description": "Manage quotes from your vault, generates a word of the day, this-day-in-history, word-of-the-day recaps, daily featured wikipedia article, on-this-day for your vault, reflection prompts, one-line journals, daily intentions, and daily astrology.",
 	"author": "TheEkrizdis",
 	"authorUrl": "",
+	"fundingUrl": {
+		"ko-fi": "https://ko-fi.com/ekrizdis",
+		"buy-me-a-coffee": "buymeacoffee.com/TheEkrizdis"
+	},
 	"isDesktopOnly": false
 }

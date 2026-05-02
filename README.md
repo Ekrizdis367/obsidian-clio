@@ -396,3 +396,7 @@ Output is written to `main.js` at the plugin root.
 ## License
 
 This plugin is released under the **GNU General Public License v3.0 or later**. See [LICENSE](LICENSE) for the full text.
+
+## Support
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z31YAERO)
