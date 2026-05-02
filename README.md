@@ -2,6 +2,32 @@
 
 An Obsidian community plugin that turns your daily note into a small-but-rich daily ritual: a **quote** from your own vault, a **word of the day** with definition and examples, **on this day** in history (and optionally in your own vault), today's Wikipedia **featured article** and **picture of the day**, a **reflection prompt**, a **one-line journal**, **daily intentions** with streak tracking, and a **sky card** with the moon phase plus sunrise / sunset.
 
+## Screenshots
+
+Quote of the day (from your vault):
+
+![Muse quote of the day](assets/quote.png)
+
+Word of the day with definition and examples:
+
+![Muse word of the day](assets/wordoftheday.png)
+
+Today's Wikipedia featured article (text excerpt):
+
+![Muse featured article](assets/featuredarticle.png)
+
+Reflection prompt of the day:
+
+![Muse reflection prompt](assets/reflection.png)
+
+One-line journal:
+
+![Muse one-line journal](assets/onelinejournal.png)
+
+Sky today (moon phase and sunrise / sunset):
+
+![Muse sky today card](assets/skytoday.png)
+
 ## Features
 
 ### Quote of the day, from your vault
