@@ -369,4 +369,4 @@ Output is written to `main.js` at the plugin root.
 
 ## License
 
-[0BSD](LICENSE)
+This plugin is released under the **GNU General Public License v3.0 or later**. See [LICENSE](LICENSE) for the full text.
