@@ -1,0 +1,50 @@
+/**
+ * Curated reflection prompts. Mix of forward-looking, retrospective,
+ * gratitude, growth, and "noticing" questions. Kept short, open, and
+ * non-prescriptive so they pair well with a daily-note routine.
+ *
+ * Add to this list when an obviously-missing angle appears - keep
+ * each prompt to one sentence and avoid jargon.
+ */
+export const BUILT_IN_PROMPTS: string[] = [
+	"What are you most looking forward to today?",
+	"What's one thing you'd like to do better than yesterday?",
+	"If today were the only day you remembered, what would matter most?",
+	"What's been on your mind lately that you haven't written down?",
+	"What's a small win from yesterday?",
+	"Who hasn't gotten enough of your attention recently?",
+	"What's one decision you've been putting off?",
+	"What would make today feel meaningful?",
+	"What are you grateful for right now?",
+	"What's something you're learning?",
+	"What's a fear you can name today?",
+	"What energy do you want to bring into today?",
+	"What did you avoid yesterday, and why?",
+	"What's a question you've been sitting with?",
+	"What's the kindest thing you could do for yourself today?",
+	"What did you notice about someone else this week?",
+	"What's something you're proud of recently?",
+	"What's a habit you'd like to build, and what's the smallest first step?",
+	"What's been nourishing you lately?",
+	"What would you tell your past self from a year ago?",
+	"What's one thing you could let go of today?",
+	"What's a boundary you want to honor today?",
+	"What surprised you this week?",
+	"What story are you telling yourself right now? Is it true?",
+	"What does ‘enough' look like for today?",
+	"What's a small kindness you witnessed recently?",
+	"What's a question you'd like to live with this week?",
+	"What feels hard right now, and what would help?",
+	"What's one thing you're excited to learn about?",
+	"What's been distracting you from what matters?",
+	"What's something true you don't usually say out loud?",
+	"What deserves your attention today?",
+	"What's a piece of advice you'd give your future self?",
+	"What's working well in your life right now?",
+	"What's the simplest, kindest version of today?",
+	"What's a quiet joy you've been savoring?",
+	"What did you say yes to recently that you wish you'd said no to?",
+	"What did you say no to that you're glad about?",
+	"What feeling have you been pushing away?",
+	"What would it look like to slow down today?",
+];
