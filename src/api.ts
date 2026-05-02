@@ -31,7 +31,7 @@ import {
  * Public API for templater / dataview.
  *
  * Stable across patch releases - prefer extending it over breaking the
- * existing surface. Available at `app.plugins.plugins["obsidian-muse"].api`.
+ * existing surface. Available at `app.plugins.plugins["muse"].api`.
  */
 export interface MuseApi {
 	getQuoteOfTheDay(): Quote | null;

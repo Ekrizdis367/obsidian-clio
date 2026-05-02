@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-muse",
-	"version": "1.0.0",
+	"name": "muse",
+	"version": "1.0.1",
 	"description": "Quote of the day from your vault, plus a daily word with definition and example sentence.",
 	"main": "main.js",
 	"type": "module",

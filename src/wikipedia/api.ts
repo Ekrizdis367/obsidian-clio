@@ -22,7 +22,7 @@ const FEATURED_URL =
  * Wikimedia asks API consumers to identify themselves; a generic but
  * informative UA is sufficient for low-volume use like ours.
  */
-const USER_AGENT = "obsidian-muse (Obsidian community plugin)";
+const USER_AGENT = "muse (Obsidian community plugin)";
 
 /**
  * Parsed shape we need from a single Wikimedia "featured" call. Each

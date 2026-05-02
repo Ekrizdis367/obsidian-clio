@@ -296,7 +296,7 @@ Available in **Settings → Community plugins → Muse**.
 
 ## Templater integration
 
-The plugin exposes an API at `app.plugins.plugins["obsidian-muse"].api`. Every daily card has a matching `*Markdown()` helper that returns a self-contained, static markdown snapshot - perfect for Templater dropping the day's value into a daily note (it won't change tomorrow, since the markdown is baked into the file).
+The plugin exposes an API at `app.plugins.plugins["muse"].api`. Every daily card has a matching `*Markdown()` helper that returns a self-contained, static markdown snapshot - perfect for Templater dropping the day's value into a daily note (it won't change tomorrow, since the markdown is baked into the file).
 
 Each helper emits a **`muse-static` code block** with the day's data baked in as YAML. The plugin renders these blocks using the same DOM and CSS classes as the live `quote-of-the-day` / `word-of-the-day` / etc. codeblock cards, so the drop looks identical to the live block - except the data is frozen in your daily note forever. Reopen the same note tomorrow and you'll see the same word/quote/fact you saw the day you wrote it. Live-state-only controls (Skip, Show different) are omitted; "Copy" buttons and external "Read more" links are kept since they only need the baked data. The codeblock language is unique to static drops, so the indexer never picks them up - your daily-note quote won't show up as a duplicate in the quote library, and you don't need any extra ignore marker.
 
@@ -304,7 +304,7 @@ Drop everything you want with one block:
 
 ```javascript
 <%*
-const muse = app.plugins.plugins["obsidian-muse"]?.api;
+const muse = app.plugins.plugins["muse"]?.api;
 tR += muse?.getQuoteOfTheDayMarkdown() ?? "";
 tR += await muse?.getWordOfTheDayMarkdown() ?? "";
 tR += await muse?.getFactOfTheDayMarkdown() ?? "";
@@ -354,7 +354,7 @@ Both responses are cached locally in `data.json` and re-used for the rest of the
 
 No vault contents, file paths, or personal information are ever sent to either service. The sky card runs entirely locally - your country / region pick (and the derived coordinates) are stored in `data.json` and never leave the device. The vault on-this-day card reads daily notes from disk only; nothing is uploaded.
 
-Requests carry only a generic `User-Agent: obsidian-muse (Obsidian community plugin)` header.
+Requests carry only a generic `User-Agent: muse (Obsidian community plugin)` header.
 
 ## Development
 

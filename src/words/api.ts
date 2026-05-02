@@ -46,7 +46,7 @@ export async function fetchDefinition(
 			method: "GET",
 			headers: {
 				Accept: "application/json",
-				"User-Agent": "obsidian-muse",
+				"User-Agent": "muse",
 			},
 			throw: false,
 		});
