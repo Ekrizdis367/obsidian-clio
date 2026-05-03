@@ -72,7 +72,7 @@ export class QuoteLibraryView extends ItemView {
 		return "quote";
 	}
 
-	override async onOpen(): Promise<void> {
+	override onOpen(): Promise<void> {
 		this.renderShell();
 		const callback = (): void => {
 			this.rerender();
@@ -81,11 +81,13 @@ export class QuoteLibraryView extends ItemView {
 		this.detach = (): void => {
 			this.host.store.off("changed", callback);
 		};
+		return Promise.resolve();
 	}
 
-	override async onClose(): Promise<void> {
+	override onClose(): Promise<void> {
 		this.detach?.();
 		this.detach = null;
+		return Promise.resolve();
 	}
 
 	private renderShell(): void {

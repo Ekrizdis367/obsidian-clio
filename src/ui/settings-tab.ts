@@ -489,8 +489,7 @@ export class MuseSettingsTab extends PluginSettingTab {
 			)
 			.addText((text) =>
 				text
-					// eslint-disable-next-line obsidianmd/ui/sentence-case
-					.setPlaceholder("daily-notes")
+					.setPlaceholder("./daily-notes")
 					.setValue(this.host.getSettings().dailyNotesFolder)
 					.onChange(async (value) => {
 						this.host.getSettings().dailyNotesFolder = value.trim();
@@ -505,8 +504,7 @@ export class MuseSettingsTab extends PluginSettingTab {
 			)
 			.addText((text) =>
 				text
-					// eslint-disable-next-line obsidianmd/ui/sentence-case
-					.setPlaceholder("yyyy-mm-dd")
+					.setPlaceholder("2012-12-20")
 					.setValue(this.host.getSettings().dailyNotesFormat)
 					.onChange(async (value) => {
 						this.host.getSettings().dailyNotesFormat =
