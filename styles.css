@@ -35,10 +35,9 @@
  * across both modes. Inter-card spacing is driven by the card's own
  * margin (above), so this rule sets the wrapper's margin to 0.
  */
-:is(pre, .el-pre, .cm-embed-block):has(.clio-quote-card),
-:is(pre, .el-pre, .cm-embed-block):has(.clio-word-card),
-:is(pre, .el-pre, .cm-embed-block):has(.clio-fact-card),
-:is(pre, .el-pre, .cm-embed-block):has(.clio-intentions-card) {
+pre.clio-embed-host,
+.el-pre.clio-embed-host,
+.cm-embed-block.clio-embed-host {
 	margin: 0;
 	padding: 0;
 	background: transparent;
@@ -433,12 +432,6 @@ a.clio-icon-button {
 
 .clio-intentions-word.is-done .clio-intentions-word-text {
 	text-decoration: line-through;
-	text-decoration-thickness: 1.5px;
-	text-decoration-color: color-mix(
-		in srgb,
-		var(--text-muted) 70%,
-		transparent
-	);
 	border-bottom-color: transparent;
 	color: var(--text-muted);
 }
@@ -595,7 +588,7 @@ a.clio-icon-button {
 .clio-journal-history-item {
 	display: grid;
 	grid-template-columns: auto auto 1fr;
-	column-gap: 0.4em;
+	gap: 0 0.4em;
 	padding: 0.15em 0;
 	font-size: 0.82em;
 }
@@ -722,8 +715,7 @@ a.clio-icon-button {
 .clio-sky-symbolic {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	column-gap: 0.6em;
-	row-gap: 0.1em;
+	gap: 0.1em 0.6em;
 	margin-top: 0.55em;
 	padding-top: 0.45em;
 	border-top: 1px dashed var(--background-modifier-border);
@@ -940,15 +932,17 @@ a.clio-icon-button {
 }
 
 .clio-migrate-fields {
-	display: grid;
-	grid-template-columns: max-content 1fr;
-	gap: 0.4em 0.75em;
-	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
 	margin: 0.75em 0 0.25em;
 }
 
 .clio-migrate-field {
-	display: contents;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 0.4em 0.75em;
+	align-items: center;
 }
 
 .clio-migrate-field label {

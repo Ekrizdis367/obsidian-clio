@@ -5,6 +5,7 @@ import {
 } from "obsidian";
 import type { WikipediaManager } from "../wikipedia/manager";
 import type { DailyFactRecord } from "../types";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	appendCardLinkIcon,
@@ -26,6 +27,7 @@ class OnThisDayBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		void this.render();
 		const callback = (): void => {
 			void this.render();

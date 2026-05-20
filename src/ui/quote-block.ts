@@ -14,6 +14,7 @@ import {
 	quoteOfTheDay,
 	randomQuote,
 } from "../quotes/selection";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	createCardHeader,
@@ -63,6 +64,7 @@ class QuoteBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 		const callback = (): void => this.render();
 		this.host.store.on("changed", callback);

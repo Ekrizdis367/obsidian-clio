@@ -18,6 +18,7 @@ import {
 	moonSign,
 	sunSign,
 } from "../sky/zodiac";
+import { markEmbedWrapper } from "../utils/embed";
 import { createCardHeader } from "./card-header";
 
 function formatShortDate(date: Date): string {
@@ -40,6 +41,7 @@ class SkyBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 	}
 

@@ -5,6 +5,7 @@ import {
 	Notice,
 	parseYaml,
 } from "obsidian";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	appendCardLinkIcon,
@@ -49,6 +50,7 @@ class StaticBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 	}
 

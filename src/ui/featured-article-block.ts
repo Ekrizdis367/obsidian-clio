@@ -4,6 +4,7 @@ import {
 } from "obsidian";
 import type { WikipediaManager } from "../wikipedia/manager";
 import type { FeaturedArticleRecord } from "../types";
+import { markEmbedWrapper } from "../utils/embed";
 import { appendCardLinkIcon, createCardHeader } from "./card-header";
 
 export interface FeaturedArticleBlockHost {
@@ -21,6 +22,7 @@ class FeaturedArticleBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		void this.render();
 		const callback = (): void => {
 			void this.render();

@@ -4,6 +4,7 @@ import {
 } from "obsidian";
 import type { IntentionsManager } from "../intentions/manager";
 import type { Intention } from "../types";
+import { markEmbedWrapper } from "../utils/embed";
 import { createCardHeader } from "./card-header";
 
 export interface IntentionsBlockHost {
@@ -43,6 +44,7 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 		const callback = (): void => this.render();
 		this.host.manager.on("changed", callback);

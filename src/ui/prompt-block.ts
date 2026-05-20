@@ -5,6 +5,7 @@ import {
 } from "obsidian";
 import type { PromptManager } from "../prompts/manager";
 import type { DailyPromptRecord } from "../types";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	createCardHeader,
@@ -25,6 +26,7 @@ class PromptBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		void this.render();
 		const callback = (): void => {
 			void this.render();

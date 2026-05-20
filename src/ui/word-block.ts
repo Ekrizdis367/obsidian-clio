@@ -5,6 +5,7 @@ import {
 } from "obsidian";
 import type { DailyWordRecord } from "../types";
 import type { WordManager } from "../words/manager";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	createCardHeader,
@@ -25,6 +26,7 @@ class WordBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		void this.render();
 		const callback = (): void => {
 			void this.render();

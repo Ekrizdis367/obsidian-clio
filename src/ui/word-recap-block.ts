@@ -1,5 +1,6 @@
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 import type { WordManager } from "../words/manager";
+import { markEmbedWrapper } from "../utils/embed";
 import { createCardHeader } from "./card-header";
 
 export interface WordRecapBlockHost {
@@ -23,6 +24,7 @@ class WordRecapBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 		const callback = (): void => this.render();
 		this.host.manager.on("changed", callback);

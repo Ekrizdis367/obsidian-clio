@@ -5,6 +5,7 @@ import {
 } from "obsidian";
 import type { JournalManager } from "../journal/manager";
 import { todayLocalIso } from "../utils/date";
+import { markEmbedWrapper } from "../utils/embed";
 import { createCardHeader } from "./card-header";
 
 export interface OneLineJournalBlockHost {
@@ -28,6 +29,7 @@ class OneLineJournalBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 		const callback = (): void => this.render();
 		this.host.manager.on("changed", callback);

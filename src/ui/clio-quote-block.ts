@@ -7,6 +7,7 @@ import {
 	parseClioQuoteSource,
 	type ClioQuoteFields,
 } from "../utils/clio-quote";
+import { markEmbedWrapper } from "../utils/embed";
 import {
 	appendCardIconButton,
 	createCardHeader,
@@ -27,6 +28,7 @@ class ClioQuoteBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		this.render();
 	}
 

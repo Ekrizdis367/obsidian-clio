@@ -8,6 +8,7 @@ import {
 	type VaultMemory,
 	type VaultOnThisDayHost,
 } from "../journal/on-this-day";
+import { markEmbedWrapper } from "../utils/embed";
 import { createCardHeader } from "./card-header";
 
 export interface JournalOnThisDayBlockHost extends VaultOnThisDayHost {
@@ -23,6 +24,7 @@ class JournalOnThisDayBlockChild extends MarkdownRenderChild {
 	}
 
 	override onload(): void {
+		markEmbedWrapper(this.containerEl);
 		void this.render();
 	}
 
