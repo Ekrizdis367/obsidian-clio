@@ -1,6 +1,6 @@
 {
 	"name": "clio",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Quote of the day from your vault, plus a daily word with definition and example sentence.",
 	"main": "main.js",
 	"type": "module",
