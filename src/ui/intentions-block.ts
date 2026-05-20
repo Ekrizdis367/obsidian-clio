@@ -65,12 +65,12 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 	 */
 	private render(): void {
 		this.containerEl.empty();
-		const card = this.containerEl.createDiv({ cls: "muse-intentions-card" });
+		const card = this.containerEl.createDiv({ cls: "clio-intentions-card" });
 		createCardHeader(card, "Today's intentions");
 		const items = this.host.manager.getItems();
 		if (items.length === 0) {
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "No intentions set yet. Add up to four in the plugin settings.",
 			});
 			return;
@@ -81,9 +81,9 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 			.length;
 		const allDone = doneCount === items.length;
 
-		const sentence = card.createDiv({ cls: "muse-intentions-sentence" });
+		const sentence = card.createDiv({ cls: "clio-intentions-sentence" });
 		sentence.createSpan({
-			cls: "muse-intentions-lead",
+			cls: "clio-intentions-lead",
 			text: this.opts.date ? `On ${this.opts.date}, I'll ` : "Today, I'll ",
 		});
 
@@ -93,17 +93,17 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 			const isPenultimate = i === items.length - 2;
 			if (isLast) {
 				sentence.createSpan({
-					cls: "muse-intentions-punct",
+					cls: "clio-intentions-punct",
 					text: ".",
 				});
 			} else if (isPenultimate) {
 				sentence.createSpan({
-					cls: "muse-intentions-punct",
+					cls: "clio-intentions-punct",
 					text: items.length === 2 ? " and " : ", and ",
 				});
 			} else {
 				sentence.createSpan({
-					cls: "muse-intentions-punct",
+					cls: "clio-intentions-punct",
 					text: ", ",
 				});
 			}
@@ -111,7 +111,7 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 
 		if (allDone) {
 			sentence.createSpan({
-				cls: "muse-intentions-celebrate",
+				cls: "clio-intentions-celebrate",
 				text: " ✓ All done",
 			});
 		}
@@ -125,7 +125,7 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 		const isDone = this.host.manager.isDone(intention.id, date);
 		const streak = this.host.manager.currentStreak(intention.id, date);
 		const word = container.createEl("button", {
-			cls: `muse-intentions-word${isDone ? " is-done" : ""}`,
+			cls: `clio-intentions-word${isDone ? " is-done" : ""}`,
 			attr: {
 				type: "button",
 				"aria-pressed": String(isDone),
@@ -135,12 +135,12 @@ class IntentionsBlockChild extends MarkdownRenderChild {
 			},
 		});
 		word.createSpan({
-			cls: "muse-intentions-word-text",
+			cls: "clio-intentions-word-text",
 			text: (intention.text || "(untitled)").toLowerCase(),
 		});
 		if (streak >= 2) {
 			word.createSpan({
-				cls: "muse-intentions-word-streak",
+				cls: "clio-intentions-word-streak",
 				attr: { "aria-label": `${streak} day streak` },
 				text: ` 🔥${streak}`,
 			});

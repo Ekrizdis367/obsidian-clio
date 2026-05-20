@@ -69,17 +69,17 @@ export interface CachedDefinition {
 /**
  * What counts as a quote when scanning vault notes.
  *
- * `muse-quote` code blocks are **always** indexed regardless of mode -
+ * `clio-quote` code blocks are **always** indexed regardless of mode -
  * they're explicit and unambiguous. The mode controls whether bare
  * blockquotes / callouts are *also* indexed:
  *
- *  - `muse-quote`  : only `muse-quote` blocks (zero false positives, recommended)
- *  - `blockquotes` : muse-quote blocks + bare `> ...` blockquotes
- *  - `callouts`    : muse-quote blocks + `> [!quote]` callouts
- *  - `both`        : muse-quote blocks + bare blockquotes + callouts
+ *  - `clio-quote`  : only `clio-quote` blocks (zero false positives, recommended)
+ *  - `blockquotes` : clio-quote blocks + bare `> ...` blockquotes
+ *  - `callouts`    : clio-quote blocks + `> [!quote]` callouts
+ *  - `both`        : clio-quote blocks + bare blockquotes + callouts
  */
 export type QuoteSourceMode =
-	| "muse-quote"
+	| "clio-quote"
 	| "blockquotes"
 	| "callouts"
 	| "both";

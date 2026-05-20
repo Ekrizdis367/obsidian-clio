@@ -43,14 +43,14 @@ class OnThisDayBlockChild extends MarkdownRenderChild {
 
 	private async render(): Promise<void> {
 		this.containerEl.empty();
-		const card = this.containerEl.createDiv({ cls: "muse-fact-card" });
+		const card = this.containerEl.createDiv({ cls: "clio-fact-card" });
 		try {
 			const today = await this.host.manager.getFactToday();
 			renderCard(card, today, this.host);
 		} catch (err) {
-			console.warn("[muse] on-this-day render failed", err);
+			console.warn("[clio] on-this-day render failed", err);
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "Could not load today's on-this-day event.",
 			});
 		}
@@ -83,7 +83,7 @@ function renderCard(
 
 	if (!today.fetched) {
 		card.createDiv({
-			cls: "muse-fact-loading",
+			cls: "clio-fact-loading",
 			text: "Looking up historical events…",
 		});
 		return;
@@ -94,14 +94,14 @@ function renderCard(
 			today.fetchError === "fetch-disabled"
 				? "On-this-day fetching is disabled. Enable it in settings."
 				: "No events available right now. Try again later.";
-		card.createDiv({ cls: "muse-empty", text: message });
+		card.createDiv({ cls: "clio-empty", text: message });
 		return;
 	}
 
-	const p = card.createEl("p", { cls: "muse-fact-text" });
+	const p = card.createEl("p", { cls: "clio-fact-text" });
 	if (today.year) {
 		p.createEl("strong", {
-			cls: "muse-fact-year",
+			cls: "clio-fact-year",
 			text: String(today.year),
 		});
 		p.appendText(" — ");

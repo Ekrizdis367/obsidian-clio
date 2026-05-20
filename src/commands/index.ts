@@ -12,7 +12,7 @@ import {
 	quoteToMarkdown,
 	randomQuote,
 } from "../quotes/selection";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import { todayLocalIso } from "../utils/date";
 import { AddQuoteModal } from "../ui/add-quote-modal";
 import { MigrateQuotesModal } from "../ui/migrate-quotes-modal";
@@ -30,7 +30,7 @@ export interface CommandsHost {
 	intentions: IntentionsManager;
 	prompts: PromptManager;
 	journal: JournalManager;
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	saveSettings(): Promise<void>;
 	openQuoteLibrary(): Promise<void>;
 }
@@ -114,7 +114,7 @@ export function registerCommands(host: CommandsHost): void {
 		name: "Insert blank quote block",
 		editorCallback: (editor: Editor) => {
 			editor.replaceSelection(
-				"```muse-quote\nquote: \nauthor: \n```\n",
+				"```clio-quote\nquote: \nauthor: \n```\n",
 			);
 		},
 	});
@@ -371,7 +371,7 @@ function noQuotesMessage(store: QuoteStore, host: CommandsHost): string {
 		return "No quotes found in your vault yet.";
 	}
 	if (host.getSettings().requireQuoteAuthor) {
-		return 'No attributed quotes available. Add an "author:" field to your muse-quote blocks (or an "\u2014 Author" line to blockquotes), or turn off "Require author" in plugin settings.';
+		return 'No attributed quotes available. Add an "author:" field to your clio-quote blocks (or an "\u2014 Author" line to blockquotes), or turn off "Require author" in plugin settings.';
 	}
 	return "No quotes available right now.";
 }

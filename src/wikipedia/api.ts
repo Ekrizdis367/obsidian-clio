@@ -22,7 +22,7 @@ const FEATURED_URL =
  * Wikimedia asks API consumers to identify themselves; a generic but
  * informative UA is sufficient for low-volume use like ours.
  */
-const USER_AGENT = "muse (Obsidian community plugin)";
+const USER_AGENT = "clio (Obsidian community plugin)";
 
 /**
  * Parsed shape we need from a single Wikimedia "featured" call. Each
@@ -68,7 +68,7 @@ export async function fetchWikipediaFeed(
 			throw: false,
 		});
 	} catch (err) {
-		console.warn("[muse] wikipedia feed fetch failed", err);
+		console.warn("[clio] wikipedia feed fetch failed", err);
 		return null;
 	}
 	if (response.status !== 200) return null;

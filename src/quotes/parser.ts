@@ -1,9 +1,9 @@
 import type { Quote, QuoteSourceMode } from "../types";
 import { hashString } from "../utils/date";
 import {
-	extractMuseQuoteBlocks,
-	type MuseQuoteBlock,
-} from "../utils/muse-quote";
+	extractClioQuoteBlocks,
+	type ClioQuoteBlock,
+} from "../utils/clio-quote";
 
 interface ParsedBlock {
 	/** Raw inner lines of the blockquote, with the leading `>` stripped. */
@@ -132,26 +132,30 @@ const QUOTE_CALLOUT_KINDS = new Set([
  * appends to a blockquote. Obsidian's inline-comment syntax keeps it
  * invisible in reading mode at the top level of a note.
  */
-export const MUSE_IGNORE_MARKER = "%%muse:ignore%%";
+export const CLIO_IGNORE_MARKER = "%%clio:ignore%%";
 
 /**
  * HTML-comment form of the ignore marker. Used by the Templater drop
  * helpers because HTML comments are stripped reliably even inside
  * callouts (where `%%...%%` sometimes leaks through to reading mode).
  */
-export const MUSE_IGNORE_HTML_MARKER = "<!-- muse:ignore -->";
+export const CLIO_IGNORE_HTML_MARKER = "<!-- clio:ignore -->";
 
 /**
  * Token that any of the supported marker forms contain. Substring
  * detection lets the parser stay neutral about where the user (or a
  * helper) chose to put the marker - inline comment, HTML comment,
- * `# muse:ignore` comment line in a `muse-quote` block, etc.
+ * `# clio:ignore` comment line in a `clio-quote` block, etc.
  */
-const MUSE_IGNORE_TOKEN = "muse:ignore";
+const CLIO_IGNORE_TOKEN = "clio:ignore";
+const LEGACY_IGNORE_TOKENS = ["muse:ignore", "almanac:ignore"] as const;
 
 export function blockHasIgnoreMarker(lines: readonly string[]): boolean {
 	for (const line of lines) {
-		if (line.includes(MUSE_IGNORE_TOKEN)) return true;
+		if (line.includes(CLIO_IGNORE_TOKEN)) return true;
+		for (const token of LEGACY_IGNORE_TOKENS) {
+			if (line.includes(token)) return true;
+		}
 	}
 	return false;
 }
@@ -248,14 +252,14 @@ function blockToQuote(
 }
 
 /**
- * Convert a parsed `muse-quote` block into a Quote.
+ * Convert a parsed `clio-quote` block into a Quote.
  *
- * `muse-quote` blocks are explicit user-authored cards, so the parser is
+ * `clio-quote` blocks are explicit user-authored cards, so the parser is
  * more permissive than the blockquote path: missing fields are tolerated
  * and the only hard requirement is non-empty quote text.
  */
-function museQuoteToQuote(
-	block: MuseQuoteBlock,
+function clioQuoteToQuote(
+	block: ClioQuoteBlock,
 	sourcePath: string,
 ): Quote | null {
 	const text = (block.fields["quote"] ?? block.fields["text"] ?? "").trim();
@@ -287,17 +291,17 @@ export function parseQuotesFromMarkdown(
 ): Quote[] {
 	const out: Quote[] = [];
 
-	// `muse-quote` blocks are always indexed - they're explicit, opt-in,
+	// `clio-quote` blocks are always indexed - they're explicit, opt-in,
 	// and have no false-positive risk like bare blockquotes do.
-	for (const block of extractMuseQuoteBlocks(content)) {
-		const quote = museQuoteToQuote(block, sourcePath);
+	for (const block of extractClioQuoteBlocks(content)) {
+		const quote = clioQuoteToQuote(block, sourcePath);
 		if (quote) out.push(quote);
 	}
 
-	// Bare blockquotes / callouts are mode-gated. `muse-quote` mode opts
+	// Bare blockquotes / callouts are mode-gated. `clio-quote` mode opts
 	// out of them entirely so prose blockquotes and code-snippet quotes
 	// don't get scooped up.
-	if (mode !== "muse-quote") {
+	if (mode !== "clio-quote") {
 		for (const block of extractBlocks(content)) {
 			const quote = blockToQuote(block, sourcePath, mode);
 			if (quote) out.push(quote);

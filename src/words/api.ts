@@ -46,12 +46,12 @@ export async function fetchDefinition(
 			method: "GET",
 			headers: {
 				Accept: "application/json",
-				"User-Agent": "muse",
+				"User-Agent": "clio",
 			},
 			throw: false,
 		});
 	} catch (err) {
-		console.warn("[muse] dictionary fetch failed", cleaned, err);
+		console.warn("[clio] dictionary fetch failed", cleaned, err);
 		return null;
 	}
 	if (response.status !== 200) return null;

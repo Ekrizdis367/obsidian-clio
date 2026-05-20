@@ -16,7 +16,7 @@ export const MAX_INTENTIONS = 4;
 /** Most word-of-the-day entries we keep in the recap history. */
 export const MAX_WORD_HISTORY = 30;
 
-export interface MuseSettings {
+export interface ClioSettings {
 	/**
 	 * Vault-relative folder paths to scan for quotes. Empty array = scan the
 	 * entire vault.
@@ -28,7 +28,7 @@ export interface MuseSettings {
 	 */
 	quotesInboxPath: string;
 	/**
-	 * What we treat as a quote in addition to `muse-quote` code blocks
+	 * What we treat as a quote in addition to `clio-quote` code blocks
 	 * (which are always indexed). See {@link QuoteSourceMode} for the
 	 * full matrix.
 	 */
@@ -118,10 +118,10 @@ export interface MuseSettings {
 	 */
 	intentions: IntentionsState;
 	/** Persistent state - bundled in the same `data.json` round-trip. */
-	state: MuseState;
+	state: ClioState;
 }
 
-export interface MuseState {
+export interface ClioState {
 	word: WordState;
 	fact: FactState;
 	featuredArticle: FeaturedArticleRecord | null;
@@ -129,7 +129,7 @@ export interface MuseState {
 	journal: JournalState;
 }
 
-export const DEFAULT_STATE: MuseState = {
+export const DEFAULT_STATE: ClioState = {
 	word: {
 		today: null,
 		cache: {},
@@ -151,10 +151,10 @@ export const DEFAULT_STATE: MuseState = {
 	},
 };
 
-export const DEFAULT_SETTINGS: MuseSettings = {
+export const DEFAULT_SETTINGS: ClioSettings = {
 	quoteFolders: [],
 	quotesInboxPath: "Quotes.md",
-	quoteSource: "muse-quote",
+	quoteSource: "clio-quote",
 	rotateAtMidnight: true,
 	favoriteQuoteIds: [],
 	requireQuoteAuthor: true,
@@ -181,9 +181,9 @@ export const DEFAULT_SETTINGS: MuseSettings = {
 };
 
 export function mergeSettings(
-	raw: Partial<MuseSettings> | null,
-): MuseSettings {
-	const base: MuseSettings = {
+	raw: Partial<ClioSettings> | null,
+): ClioSettings {
+	const base: ClioSettings = {
 		...DEFAULT_SETTINGS,
 		quoteFolders: [],
 		favoriteQuoteIds: [],
@@ -316,15 +316,17 @@ export function mergeSettings(
 /**
  * Validate the persisted `quoteSource` value, also migrating the
  * short-lived `widgets` value (used in an early prototype of this
- * feature) to the final `muse-quote` name.
+ * feature) to the final `clio-quote` name.
  */
 function parseQuoteSource(
 	raw: unknown,
 	fallback: QuoteSourceMode,
 ): QuoteSourceMode {
-	if (raw === "widgets") return "muse-quote";
+	if (raw === "widgets" || raw === "muse-quote" || raw === "almanac-quote") {
+		return "clio-quote";
+	}
 	if (
-		raw === "muse-quote" ||
+		raw === "clio-quote" ||
 		raw === "blockquotes" ||
 		raw === "callouts" ||
 		raw === "both"
@@ -335,7 +337,7 @@ function parseQuoteSource(
 }
 
 function parseSkyCountryCode(
-	raw: Partial<MuseSettings>,
+	raw: Partial<ClioSettings>,
 	fallback: string | null,
 ): string | null {
 	if (typeof raw.skyCountryCode === "string" && raw.skyCountryCode.trim()) {
@@ -378,7 +380,7 @@ function parseIntentions(raw: unknown): IntentionsState {
 	return { items, history };
 }
 
-function mergeState(raw: unknown): MuseState {
+function mergeState(raw: unknown): ClioState {
 	const stateRaw = isPlainObject(raw) ? raw : {};
 	const wordRaw = isPlainObject(stateRaw["word"]) ? stateRaw["word"] : {};
 	const todayRaw = isPlainObject(wordRaw["today"]) ? wordRaw["today"] : null;

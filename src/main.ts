@@ -1,5 +1,5 @@
 import { Plugin, TAbstractFile, TFile, WorkspaceLeaf, debounce } from "obsidian";
-import { DEFAULT_SETTINGS, mergeSettings, type MuseSettings } from "./settings";
+import { DEFAULT_SETTINGS, mergeSettings, type ClioSettings } from "./settings";
 import { QuoteStore } from "./quotes/store";
 import { WordManager } from "./words/manager";
 import { WikipediaManager } from "./wikipedia/manager";
@@ -8,7 +8,7 @@ import { PromptManager } from "./prompts/manager";
 import { JournalManager } from "./journal/manager";
 import { registerCommands } from "./commands";
 import { registerQuoteBlockProcessor } from "./ui/quote-block";
-import { registerMuseQuoteBlockProcessor } from "./ui/muse-quote-block";
+import { registerClioQuoteBlockProcessor } from "./ui/clio-quote-block";
 import { registerWordBlockProcessor } from "./ui/word-block";
 import { registerOnThisDayBlockProcessor } from "./ui/on-this-day-block";
 import { registerFeaturedArticleBlockProcessor } from "./ui/featured-article-block";
@@ -23,12 +23,12 @@ import {
 	QuoteLibraryView,
 	VIEW_TYPE_QUOTE_LIBRARY,
 } from "./ui/quote-library-view";
-import { MuseSettingsTab } from "./ui/settings-tab";
-import { createApi, type MuseApi } from "./api";
+import { ClioSettingsTab } from "./ui/settings-tab";
+import { createApi, type ClioApi } from "./api";
 
-export default class MusePlugin extends Plugin {
-	settings!: MuseSettings;
-	api!: MuseApi;
+export default class ClioPlugin extends Plugin {
+	settings!: ClioSettings;
+	api!: ClioApi;
 	private store!: QuoteStore;
 	private wordManager!: WordManager;
 	private wikipediaManager!: WikipediaManager;
@@ -78,7 +78,7 @@ export default class MusePlugin extends Plugin {
 			store: this.store,
 			getSettings: () => this.settings,
 		});
-		registerMuseQuoteBlockProcessor(registerBlock);
+		registerClioQuoteBlockProcessor(registerBlock);
 		registerWordBlockProcessor(registerBlock, { manager: this.wordManager });
 		registerOnThisDayBlockProcessor(registerBlock, {
 			manager: this.wikipediaManager,
@@ -125,7 +125,7 @@ export default class MusePlugin extends Plugin {
 		});
 
 		this.addSettingTab(
-			new MuseSettingsTab(this, {
+			new ClioSettingsTab(this, {
 				app: this.app,
 				getSettings: () => this.settings,
 				saveSettings: () => this.saveSettings(),
@@ -189,7 +189,7 @@ export default class MusePlugin extends Plugin {
 	}
 
 	private async loadSettings(): Promise<void> {
-		const raw = (await this.loadData()) as Partial<MuseSettings> | null;
+		const raw = (await this.loadData()) as Partial<ClioSettings> | null;
 		this.settings = mergeSettings(raw ?? DEFAULT_SETTINGS);
 	}
 

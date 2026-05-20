@@ -2,7 +2,7 @@ import { App, Modal, Notice } from "obsidian";
 import {
 	convertCandidate,
 	markCandidateIgnored,
-	previewMuseQuoteBlock,
+	previewClioQuoteBlock,
 	type ConvertOverrides,
 	type QuoteCandidate,
 } from "../quotes/migration";
@@ -47,7 +47,7 @@ export class MigrateQuotesModal extends Modal {
 	}
 
 	override onOpen(): void {
-		this.modalEl.addClass("muse-migrate-modal");
+		this.modalEl.addClass("clio-migrate-modal");
 		this.skipDormantCandidates();
 		this.loadEditFromCurrent();
 		this.render();
@@ -120,7 +120,7 @@ export class MigrateQuotesModal extends Modal {
 	private updatePreview(): void {
 		const c = this.current;
 		if (!c || !this.previewEl) return;
-		this.previewEl.setText(previewMuseQuoteBlock(c, this.currentOverrides()));
+		this.previewEl.setText(previewClioQuoteBlock(c, this.currentOverrides()));
 	}
 
 	private render(): void {
@@ -140,44 +140,44 @@ export class MigrateQuotesModal extends Modal {
 			text: `Convert quote ${this.positionLabel()}`,
 		});
 
-		const meta = contentEl.createDiv({ cls: "muse-migrate-meta" });
+		const meta = contentEl.createDiv({ cls: "clio-migrate-meta" });
 		meta.createSpan({
-			cls: "muse-migrate-file",
+			cls: "clio-migrate-file",
 			text: `${c.file.path} \u00b7 line ${c.startLine + 1}`,
 		});
-		if (c.kind === "muse-quote") {
+		if (c.kind === "clio-quote") {
 			meta.createSpan({
-				cls: "muse-migrate-badge",
-				text: "muse-quote",
+				cls: "clio-migrate-badge",
+				text: "clio-quote",
 			});
 		} else if (c.isCallout) {
 			meta.createSpan({
-				cls: "muse-migrate-badge",
+				cls: "clio-migrate-badge",
 				text: "callout",
 			});
 		}
 
 		contentEl.createEl("h4", {
-			cls: "muse-migrate-section-label",
+			cls: "clio-migrate-section-label",
 			text: "Currently",
 		});
 		contentEl
-			.createEl("pre", { cls: "muse-migrate-preview" })
+			.createEl("pre", { cls: "clio-migrate-preview" })
 			.createEl("code", { text: c.rawLines.join("\n") });
 
 		this.renderEditFields(contentEl);
 
 		contentEl.createEl("h4", {
-			cls: "muse-migrate-section-label",
+			cls: "clio-migrate-section-label",
 			text: "Will become",
 		});
 		const previewWrap = contentEl.createEl("pre", {
-			cls: "muse-migrate-preview",
+			cls: "clio-migrate-preview",
 		});
 		this.previewEl = previewWrap.createEl("code");
 		this.updatePreview();
 
-		const buttons = contentEl.createDiv({ cls: "muse-migrate-buttons" });
+		const buttons = contentEl.createDiv({ cls: "clio-migrate-buttons" });
 
 		const stopBtn = buttons.createEl("button", { text: "Stop" });
 		stopBtn.addEventListener("click", () => this.close());
@@ -198,18 +198,18 @@ export class MigrateQuotesModal extends Modal {
 		});
 
 		const ignoreLabel =
-			c.kind === "muse-quote"
+			c.kind === "clio-quote"
 				? "Keep as is"
 				: "Mark as not a quote";
 		const ignoreTitle =
-			c.kind === "muse-quote"
+			c.kind === "clio-quote"
 				? "Insert a comment line so this block won't be flagged again"
 				: "Append an invisible marker so this blockquote is permanently ignored";
 		const ignoreBtn = buttons.createEl("button", {
 			text: ignoreLabel,
 			attr: { title: ignoreTitle },
 		});
-		ignoreBtn.addClass("muse-migrate-danger");
+		ignoreBtn.addClass("clio-migrate-danger");
 		ignoreBtn.addEventListener("click", () => {
 			void this.handleMarkIgnored();
 		});
@@ -222,12 +222,12 @@ export class MigrateQuotesModal extends Modal {
 	}
 
 	private renderEditFields(container: HTMLElement): void {
-		const fields = container.createDiv({ cls: "muse-migrate-fields" });
+		const fields = container.createDiv({ cls: "clio-migrate-fields" });
 
-		const textRow = fields.createDiv({ cls: "muse-migrate-field" });
+		const textRow = fields.createDiv({ cls: "clio-migrate-field" });
 		textRow.createEl("label", { text: "Quote" });
 		const textArea = textRow.createEl("textarea", {
-			cls: "muse-migrate-input muse-migrate-textarea",
+			cls: "clio-migrate-input clio-migrate-textarea",
 		});
 		textArea.value = this.edit.text;
 		textArea.addEventListener("input", () => {
@@ -235,11 +235,11 @@ export class MigrateQuotesModal extends Modal {
 			this.updatePreview();
 		});
 
-		const authorRow = fields.createDiv({ cls: "muse-migrate-field" });
+		const authorRow = fields.createDiv({ cls: "clio-migrate-field" });
 		authorRow.createEl("label", { text: "Author" });
 		const authorInput = authorRow.createEl("input", {
 			type: "text",
-			cls: "muse-migrate-input",
+			cls: "clio-migrate-input",
 			placeholder: "e.g. Seneca",
 		});
 		authorInput.value = this.edit.author;
@@ -248,11 +248,11 @@ export class MigrateQuotesModal extends Modal {
 			this.updatePreview();
 		});
 
-		const sourceRow = fields.createDiv({ cls: "muse-migrate-field" });
+		const sourceRow = fields.createDiv({ cls: "clio-migrate-field" });
 		sourceRow.createEl("label", { text: "Source" });
 		const sourceInput = sourceRow.createEl("input", {
 			type: "text",
-			cls: "muse-migrate-input",
+			cls: "clio-migrate-input",
 			placeholder: "Optional book / talk / URL",
 		});
 		sourceInput.value = this.edit.source;
@@ -261,11 +261,11 @@ export class MigrateQuotesModal extends Modal {
 			this.updatePreview();
 		});
 
-		const tagsRow = fields.createDiv({ cls: "muse-migrate-field" });
+		const tagsRow = fields.createDiv({ cls: "clio-migrate-field" });
 		tagsRow.createEl("label", { text: "Tags" });
 		const tagsInput = tagsRow.createEl("input", {
 			type: "text",
-			cls: "muse-migrate-input",
+			cls: "clio-migrate-input",
 			placeholder: "comma, separated",
 		});
 		tagsInput.value = this.edit.tags;
@@ -332,7 +332,7 @@ export class MigrateQuotesModal extends Modal {
 		container.createEl("h2", { text: "Quote conversion complete" });
 
 		const summary = container.createEl("ul", {
-			cls: "muse-migrate-summary",
+			cls: "clio-migrate-summary",
 		});
 		summary.createEl("li", { text: `Converted: ${this.converted}` });
 		summary.createEl("li", { text: `Skipped: ${this.skipped}` });
@@ -347,7 +347,7 @@ export class MigrateQuotesModal extends Modal {
 			});
 		}
 
-		const buttons = container.createDiv({ cls: "muse-migrate-buttons" });
+		const buttons = container.createDiv({ cls: "clio-migrate-buttons" });
 		const closeBtn = buttons.createEl("button", { text: "Close" });
 		closeBtn.addClass("mod-cta");
 		closeBtn.addEventListener("click", () => this.close());

@@ -8,14 +8,14 @@ import {
 	debounce,
 } from "obsidian";
 import type { Quote } from "../types";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import type { QuoteStore } from "../quotes/store";
 import { formatAttribution, hasAuthor } from "../quotes/selection";
 
-export const VIEW_TYPE_QUOTE_LIBRARY = "muse-quote-library";
+export const VIEW_TYPE_QUOTE_LIBRARY = "clio-quote-library";
 
 export interface QuoteLibraryHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	saveSettings(): Promise<void>;
 	store: QuoteStore;
 }
@@ -93,16 +93,16 @@ export class QuoteLibraryView extends ItemView {
 	private renderShell(): void {
 		const root = this.contentEl;
 		root.empty();
-		root.addClass("muse-library");
+		root.addClass("clio-library");
 
-		const header = root.createDiv({ cls: "muse-library-header" });
+		const header = root.createDiv({ cls: "clio-library-header" });
 		header.createEl("h3", { text: "Quote library" });
-		this.statsEl = header.createDiv({ cls: "muse-library-stats" });
+		this.statsEl = header.createDiv({ cls: "clio-library-stats" });
 
-		const controls = root.createDiv({ cls: "muse-library-controls" });
+		const controls = root.createDiv({ cls: "clio-library-controls" });
 		const searchInput = controls.createEl("input", {
 			type: "search",
-			cls: "muse-library-search",
+			cls: "clio-library-search",
 			placeholder: "Search quotes…",
 		});
 		searchInput.value = this.state.query;
@@ -113,7 +113,7 @@ export class QuoteLibraryView extends ItemView {
 
 		const tagInput = controls.createEl("input", {
 			type: "search",
-			cls: "muse-library-tag-filter",
+			cls: "clio-library-tag-filter",
 			placeholder: "Filter by tag (without #)",
 		});
 		tagInput.value = this.state.tagFilter;
@@ -123,7 +123,7 @@ export class QuoteLibraryView extends ItemView {
 		});
 
 		const favLabel = controls.createEl("label", {
-			cls: "muse-library-fav-toggle",
+			cls: "clio-library-fav-toggle",
 		});
 		const favCheckbox = favLabel.createEl("input", { type: "checkbox" });
 		favCheckbox.checked = this.state.favoritesOnly;
@@ -137,7 +137,7 @@ export class QuoteLibraryView extends ItemView {
 		// "Require author" filter is on; otherwise it has no effect.
 		if (this.host.getSettings().requireQuoteAuthor) {
 			const authorlessLabel = controls.createEl("label", {
-				cls: "muse-library-fav-toggle",
+				cls: "clio-library-fav-toggle",
 			});
 			const authorlessCheckbox = authorlessLabel.createEl("input", {
 				type: "checkbox",
@@ -151,14 +151,14 @@ export class QuoteLibraryView extends ItemView {
 		}
 
 		const refreshBtn = controls.createEl("button", {
-			cls: "muse-link-button",
+			cls: "clio-link-button",
 			text: "Refresh",
 		});
 		this.registerDomEvent(refreshBtn, "click", () => {
 			void this.host.store.refresh();
 		});
 
-		this.listEl = root.createDiv({ cls: "muse-library-list" });
+		this.listEl = root.createDiv({ cls: "clio-library-list" });
 		this.renderList();
 	}
 
@@ -181,10 +181,10 @@ export class QuoteLibraryView extends ItemView {
 		this.listEl.empty();
 		if (filtered.length === 0) {
 			this.listEl.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text:
 					all.length === 0
-						? "No quotes found. Try the Add quote command, or add a `muse-quote` code block to a note."
+						? "No quotes found. Try the Add quote command, or add a `clio-quote` code block to a note."
 						: respectAuthor
 							? 'No attributed quotes match your filters. Tick "Show authorless" to see quotes without an author.'
 							: "No quotes match your current filters.",
@@ -198,28 +198,28 @@ export class QuoteLibraryView extends ItemView {
 
 	private renderQuoteItem(quote: Quote, favorites: Set<string>): void {
 		if (!this.listEl) return;
-		const item = this.listEl.createDiv({ cls: "muse-library-item" });
+		const item = this.listEl.createDiv({ cls: "clio-library-item" });
 		const text = item.createEl("p", {
-			cls: "muse-quote-text",
+			cls: "clio-quote-text",
 			text: quote.text,
 		});
 		text.addEventListener("click", () => {
 			void this.openSource(quote);
 		});
 
-		const meta = item.createDiv({ cls: "muse-library-item-meta" });
+		const meta = item.createDiv({ cls: "clio-library-item-meta" });
 		const attribution = formatAttribution(quote);
 		if (attribution) {
 			meta.createSpan({
-				cls: "muse-quote-attribution",
+				cls: "clio-quote-attribution",
 				text: `— ${attribution}`,
 			});
 		}
 		if (quote.tags.length > 0) {
-			const tagWrap = meta.createDiv({ cls: "muse-quote-tags" });
+			const tagWrap = meta.createDiv({ cls: "clio-quote-tags" });
 			for (const tag of quote.tags) {
 				const tagEl = tagWrap.createSpan({
-					cls: "muse-tag muse-tag-clickable",
+					cls: "clio-tag clio-tag-clickable",
 					text: `#${tag}`,
 				});
 				tagEl.addEventListener("click", (evt) => {
@@ -230,26 +230,26 @@ export class QuoteLibraryView extends ItemView {
 			}
 		}
 
-		const actions = item.createDiv({ cls: "muse-library-item-actions" });
+		const actions = item.createDiv({ cls: "clio-library-item-actions" });
 		const isFav = favorites.has(quote.id);
 		const favBtn = actions.createEl("button", {
 			cls:
-				"muse-link-button" +
-				(isFav ? " muse-link-button-active" : ""),
+				"clio-link-button" +
+				(isFav ? " clio-link-button-active" : ""),
 			text: isFav ? "★ Unfavorite" : "☆ Favorite",
 		});
 		favBtn.addEventListener("click", () => {
 			void this.toggleFavorite(quote.id);
 		});
 		const sourceBtn = actions.createEl("button", {
-			cls: "muse-link-button",
+			cls: "clio-link-button",
 			text: "Open source",
 		});
 		sourceBtn.addEventListener("click", () => {
 			void this.openSource(quote);
 		});
 		const copyBtn = actions.createEl("button", {
-			cls: "muse-link-button",
+			cls: "clio-link-button",
 			text: "Copy",
 		});
 		copyBtn.addEventListener("click", () => {

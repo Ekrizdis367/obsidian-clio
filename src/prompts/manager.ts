@@ -1,5 +1,5 @@
 import { Events } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import type { DailyPromptRecord, Prompt } from "../types";
 import { hashString, todayLocalIso } from "../utils/date";
 import { pickDeterministic, pickRandom } from "../utils/random";
@@ -8,7 +8,7 @@ import { BUILT_IN_PROMPTS } from "./list";
 const EMPTY_PROMPT: Prompt = { id: "", text: "" };
 
 export interface PromptManagerHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	save(): Promise<void>;
 }
 

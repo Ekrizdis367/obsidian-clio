@@ -12,11 +12,11 @@ import {
 } from "./card-header";
 
 /**
- * `muse-static` codeblock processor.
+ * `clio-static` codeblock processor.
  *
  * Renders a frozen snapshot of any Muse card from data baked into the
  * codeblock body (YAML). The output uses the same CSS classes as the
- * live codeblock cards (`muse-quote-card`, `muse-word-card`, etc.) so
+ * live codeblock cards (`clio-quote-card`, `clio-word-card`, etc.) so
  * the visual treatment is identical.
  *
  * Templater drops these into daily notes via the API helpers in
@@ -64,9 +64,9 @@ class StaticBlockChild extends MarkdownRenderChild {
 					: {};
 		} catch (err) {
 			this.containerEl.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text:
-					"Invalid muse-static block: " +
+					"Invalid clio-static block: " +
 					((err as Error)?.message ?? "YAML parse error") +
 					".",
 			});
@@ -98,14 +98,14 @@ class StaticBlockChild extends MarkdownRenderChild {
 				break;
 			case "":
 				this.containerEl.createDiv({
-					cls: "muse-empty",
-					text: 'muse-static block needs a "type:" field.',
+					cls: "clio-empty",
+					text: 'clio-static block needs a "type:" field.',
 				});
 				break;
 			default:
 				this.containerEl.createDiv({
-					cls: "muse-empty",
-					text: `Unknown muse-static type: "${type}".`,
+					cls: "clio-empty",
+					text: `Unknown clio-static type: "${type}".`,
 				});
 		}
 	}
@@ -117,8 +117,8 @@ function renderStaticQuote(container: HTMLElement, data: StaticBlockData): void 
 	const text = str(data["text"] ?? data["quote"]).trim();
 	if (!text) {
 		container.createDiv({
-			cls: "muse-empty",
-			text: 'muse-static quote needs a "text:" field.',
+			cls: "clio-empty",
+			text: 'clio-static quote needs a "text:" field.',
 		});
 		return;
 	}
@@ -126,7 +126,7 @@ function renderStaticQuote(container: HTMLElement, data: StaticBlockData): void 
 	const source = str(data["source"]).trim();
 	const tags = strList(data["tags"]).map((t) => t.replace(/^#/, ""));
 
-	const card = container.createDiv({ cls: "muse-quote-card" });
+	const card = container.createDiv({ cls: "clio-quote-card" });
 	const { actions } = createCardHeader(card, "Quote");
 	appendCardIconButton(actions, "copy", "Copy quote", () => {
 		const attribution = [author, source].filter(Boolean).join(", ");
@@ -134,20 +134,20 @@ function renderStaticQuote(container: HTMLElement, data: StaticBlockData): void 
 		void copyToClipboard(out, "Quote copied to clipboard.");
 	});
 
-	card.createEl("p", { cls: "muse-quote-text", text });
+	card.createEl("p", { cls: "clio-quote-text", text });
 
 	const attribution = [author, source].filter(Boolean).join(", ");
 	if (attribution) {
 		card.createDiv({
-			cls: "muse-quote-attribution",
+			cls: "clio-quote-attribution",
 			text: `— ${attribution}`,
 		});
 	}
 
 	if (tags.length > 0) {
-		const tagWrap = card.createDiv({ cls: "muse-quote-tags" });
+		const tagWrap = card.createDiv({ cls: "clio-quote-tags" });
 		for (const tag of tags) {
-			tagWrap.createSpan({ cls: "muse-tag", text: `#${tag}` });
+			tagWrap.createSpan({ cls: "clio-tag", text: `#${tag}` });
 		}
 	}
 }
@@ -156,8 +156,8 @@ function renderStaticWord(container: HTMLElement, data: StaticBlockData): void {
 	const word = str(data["word"]).trim();
 	if (!word) {
 		container.createDiv({
-			cls: "muse-empty",
-			text: 'muse-static word needs a "word:" field.',
+			cls: "clio-empty",
+			text: 'clio-static word needs a "word:" field.',
 		});
 		return;
 	}
@@ -166,45 +166,45 @@ function renderStaticWord(container: HTMLElement, data: StaticBlockData): void {
 	const definitions = strList(data["definitions"] ?? data["definition"]);
 	const examples = strList(data["examples"] ?? data["example"]);
 
-	const card = container.createDiv({ cls: "muse-word-card" });
+	const card = container.createDiv({ cls: "clio-word-card" });
 	createCardHeader(card, "Word of the day");
 
-	const body = card.createDiv({ cls: "muse-word-body" });
-	body.createEl("h3", { cls: "muse-word-title", text: word });
+	const body = card.createDiv({ cls: "clio-word-body" });
+	body.createEl("h3", { cls: "clio-word-title", text: word });
 
 	if (phonetic || partOfSpeech) {
-		const meta = body.createDiv({ cls: "muse-word-meta" });
+		const meta = body.createDiv({ cls: "clio-word-meta" });
 		if (phonetic) {
 			meta.createSpan({
-				cls: "muse-word-phonetic",
+				cls: "clio-word-phonetic",
 				text: phonetic,
 			});
 		}
 		if (partOfSpeech) {
 			meta.createSpan({
-				cls: "muse-word-pos",
+				cls: "clio-word-pos",
 				text: partOfSpeech,
 			});
 		}
 	}
 
-	const content = body.createDiv({ cls: "muse-word-content" });
+	const content = body.createDiv({ cls: "clio-word-content" });
 	if (definitions.length === 0) {
 		content.createDiv({
-			cls: "muse-word-loading",
+			cls: "clio-word-loading",
 			text: "No definition available.",
 		});
 		return;
 	}
 
-	const list = content.createEl("ol", { cls: "muse-word-defs" });
+	const list = content.createEl("ol", { cls: "clio-word-defs" });
 	for (const def of definitions) {
 		list.createEl("li", { text: def });
 	}
 	if (examples.length > 0) {
-		const ex = content.createDiv({ cls: "muse-word-examples" });
+		const ex = content.createDiv({ cls: "clio-word-examples" });
 		ex.createDiv({
-			cls: "muse-word-examples-label",
+			cls: "clio-word-examples-label",
 			text: "Examples",
 		});
 		const ul = ex.createEl("ul");
@@ -218,8 +218,8 @@ function renderStaticFact(container: HTMLElement, data: StaticBlockData): void {
 	const text = str(data["text"]).trim();
 	if (!text) {
 		container.createDiv({
-			cls: "muse-empty",
-			text: 'muse-static fact needs a "text:" field.',
+			cls: "clio-empty",
+			text: 'clio-static fact needs a "text:" field.',
 		});
 		return;
 	}
@@ -231,16 +231,16 @@ function renderStaticFact(container: HTMLElement, data: StaticBlockData): void {
 	const sourceUrl = str(data["sourceUrl"] ?? data["source_url"]).trim();
 	const source = str(data["source"]).trim();
 
-	const card = container.createDiv({ cls: "muse-fact-card" });
+	const card = container.createDiv({ cls: "clio-fact-card" });
 	const { actions } = createCardHeader(card, "On this day");
 	if (sourceUrl) {
 		const tooltip = source ? `Read more on ${source}` : "Read more";
 		appendCardLinkIcon(actions, sourceUrl, tooltip);
 	}
 
-	const p = card.createEl("p", { cls: "muse-fact-text" });
+	const p = card.createEl("p", { cls: "clio-fact-text" });
 	if (year) {
-		p.createEl("strong", { cls: "muse-fact-year", text: year });
+		p.createEl("strong", { cls: "clio-fact-year", text: year });
 		p.appendText(" — ");
 	}
 	p.appendText(text);
@@ -254,37 +254,37 @@ function renderStaticArticle(
 	const extract = str(data["extract"]).trim();
 	if (!title) {
 		container.createDiv({
-			cls: "muse-empty",
-			text: 'muse-static article needs a "title:" field.',
+			cls: "clio-empty",
+			text: 'clio-static article needs a "title:" field.',
 		});
 		return;
 	}
 	const sourceUrl = str(data["sourceUrl"] ?? data["source_url"]).trim();
 
 	const card = container.createDiv({
-		cls: "muse-fact-card muse-featured-card",
+		cls: "clio-fact-card clio-featured-card",
 	});
 	const { actions } = createCardHeader(card, "Featured article");
 	if (sourceUrl) {
 		appendCardLinkIcon(actions, sourceUrl, "Read more on Wikipedia");
 	}
 
-	const body = card.createDiv({ cls: "muse-featured-body" });
-	const text = body.createDiv({ cls: "muse-featured-text" });
+	const body = card.createDiv({ cls: "clio-featured-body" });
+	const text = body.createDiv({ cls: "clio-featured-text" });
 	if (sourceUrl) {
 		const titleLink = text.createEl("a", {
-			cls: "muse-featured-title",
+			cls: "clio-featured-title",
 			text: title,
 			href: sourceUrl,
 		});
 		titleLink.setAttr("target", "_blank");
 		titleLink.setAttr("rel", "noopener");
 	} else {
-		text.createDiv({ cls: "muse-featured-title", text: title });
+		text.createDiv({ cls: "clio-featured-title", text: title });
 	}
 	if (extract) {
 		text.createEl("p", {
-			cls: "muse-featured-extract",
+			cls: "clio-featured-extract",
 			text: extract,
 		});
 	}
@@ -294,20 +294,20 @@ function renderStaticPrompt(container: HTMLElement, data: StaticBlockData): void
 	const text = str(data["text"]).trim();
 	if (!text) {
 		container.createDiv({
-			cls: "muse-empty",
-			text: 'muse-static prompt needs a "text:" field.',
+			cls: "clio-empty",
+			text: 'clio-static prompt needs a "text:" field.',
 		});
 		return;
 	}
 	const card = container.createDiv({
-		cls: "muse-fact-card muse-prompt-card",
+		cls: "clio-fact-card clio-prompt-card",
 	});
 	const { actions } = createCardHeader(card, "Reflection prompt");
 	appendCardIconButton(actions, "copy", "Copy prompt", () => {
 		void copyToClipboard(text, "Prompt copied.");
 	});
 
-	card.createEl("p", { cls: "muse-prompt-text", text });
+	card.createEl("p", { cls: "clio-prompt-text", text });
 }
 
 function renderStaticIntentions(
@@ -315,41 +315,41 @@ function renderStaticIntentions(
 	data: StaticBlockData,
 ): void {
 	const items = strList(data["items"] ?? data["intentions"]);
-	const card = container.createDiv({ cls: "muse-intentions-card" });
+	const card = container.createDiv({ cls: "clio-intentions-card" });
 	createCardHeader(card, "Today's intentions");
 	if (items.length === 0) {
 		card.createDiv({
-			cls: "muse-empty",
-			text: "No intentions configured. Add some in Settings → Muse.",
+			cls: "clio-empty",
+			text: "No intentions configured. Add some in Settings → Clio.",
 		});
 		return;
 	}
 
-	const sentence = card.createDiv({ cls: "muse-intentions-sentence" });
+	const sentence = card.createDiv({ cls: "clio-intentions-sentence" });
 	sentence.createSpan({
-		cls: "muse-intentions-lead",
+		cls: "clio-intentions-lead",
 		text: "Today, I'll ",
 	});
 	items.forEach((it, i) => {
 		sentence.createSpan({
-			cls: "muse-intentions-word",
+			cls: "clio-intentions-word",
 			text: (it || "(untitled)").toLowerCase(),
 		});
 		const isLast = i === items.length - 1;
 		const isPenultimate = i === items.length - 2;
 		if (isLast) {
 			sentence.createSpan({
-				cls: "muse-intentions-punct",
+				cls: "clio-intentions-punct",
 				text: ".",
 			});
 		} else if (isPenultimate) {
 			sentence.createSpan({
-				cls: "muse-intentions-punct",
+				cls: "clio-intentions-punct",
 				text: items.length === 2 ? " and " : ", and ",
 			});
 		} else {
 			sentence.createSpan({
-				cls: "muse-intentions-punct",
+				cls: "clio-intentions-punct",
 				text: ", ",
 			});
 		}
@@ -396,28 +396,28 @@ function renderStaticJournalHistory(
 		: [];
 
 	const card = container.createDiv({
-		cls: "muse-fact-card muse-vault-otd-card",
+		cls: "clio-fact-card clio-vault-otd-card",
 	});
 	createCardHeader(card, "On this day in your vault");
 
 	if (entries.length === 0) {
 		card.createDiv({
-			cls: "muse-empty",
+			cls: "clio-empty",
 			text: "No past-year entries to show.",
 		});
 		return;
 	}
 
-	const list = card.createEl("ul", { cls: "muse-vault-otd-list" });
+	const list = card.createEl("ul", { cls: "clio-vault-otd-list" });
 	for (const m of entries) {
-		const item = list.createEl("li", { cls: "muse-vault-otd-item" });
-		const head = item.createDiv({ cls: "muse-vault-otd-head" });
+		const item = list.createEl("li", { cls: "clio-vault-otd-item" });
+		const head = item.createDiv({ cls: "clio-vault-otd-head" });
 		head.createSpan({
-			cls: "muse-vault-otd-year",
+			cls: "clio-vault-otd-year",
 			text: String(m.year),
 		});
 		head.createSpan({
-			cls: "muse-vault-otd-ago",
+			cls: "clio-vault-otd-ago",
 			text:
 				m.yearsAgo === 1
 					? "1 year ago"
@@ -425,7 +425,7 @@ function renderStaticJournalHistory(
 		});
 		if (m.path) {
 			const link = item.createEl("a", {
-				cls: "muse-vault-otd-link internal-link",
+				cls: "clio-vault-otd-link internal-link",
 				text: m.path.split("/").pop() ?? m.path,
 				href: m.path,
 			});
@@ -436,7 +436,7 @@ function renderStaticJournalHistory(
 			});
 		}
 		item.createEl("p", {
-			cls: "muse-vault-otd-preview",
+			cls: "clio-vault-otd-preview",
 			text: m.text,
 		});
 	}
@@ -488,7 +488,14 @@ export function registerStaticBlockProcessor(
 	) => void,
 	host: StaticBlockHost,
 ): void {
-	register("muse-static", (source, el, ctx) => {
+	const handler = (
+		source: string,
+		el: HTMLElement,
+		ctx: MarkdownPostProcessorContext,
+	): void => {
 		ctx.addChild(new StaticBlockChild(el, host, source));
-	});
+	};
+	register("clio-static", handler);
+	register("muse-static", handler);
+	register("almanac-static", handler);
 }

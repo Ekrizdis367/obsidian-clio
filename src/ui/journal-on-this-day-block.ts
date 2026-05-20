@@ -29,7 +29,7 @@ class JournalOnThisDayBlockChild extends MarkdownRenderChild {
 	private async render(): Promise<void> {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-vault-otd-card",
+			cls: "clio-fact-card clio-vault-otd-card",
 		});
 		createCardHeader(card, "On this day in your vault");
 
@@ -41,21 +41,21 @@ class JournalOnThisDayBlockChild extends MarkdownRenderChild {
 					? ` in “${settings.dailyNotesFolder}”`
 					: "";
 				card.createDiv({
-					cls: "muse-empty",
+					cls: "clio-empty",
 					text:
 						`No daily notes from prior years matched today's date${folderHint}. ` +
 						`Check your Daily notes folder/format in Muse settings.`,
 				});
 				return;
 			}
-			const list = card.createEl("ul", { cls: "muse-vault-otd-list" });
+			const list = card.createEl("ul", { cls: "clio-vault-otd-list" });
 			for (const m of memories) {
 				renderMemoryItem(list, m, this.host);
 			}
 		} catch (err) {
-			console.warn("[muse] vault on-this-day render failed", err);
+			console.warn("[clio] vault on-this-day render failed", err);
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "Could not scan the vault for past notes.",
 			});
 		}
@@ -67,19 +67,19 @@ function renderMemoryItem(
 	memory: VaultMemory,
 	host: JournalOnThisDayBlockHost,
 ): void {
-	const item = parent.createEl("li", { cls: "muse-vault-otd-item" });
-	const head = item.createDiv({ cls: "muse-vault-otd-head" });
+	const item = parent.createEl("li", { cls: "clio-vault-otd-item" });
+	const head = item.createDiv({ cls: "clio-vault-otd-head" });
 	head.createSpan({
-		cls: "muse-vault-otd-year",
+		cls: "clio-vault-otd-year",
 		text: String(memory.year),
 	});
 	head.createSpan({
-		cls: "muse-vault-otd-ago",
+		cls: "clio-vault-otd-ago",
 		text: memory.yearsAgo === 1 ? "1 year ago" : `${memory.yearsAgo} years ago`,
 	});
 
 	const link = item.createEl("a", {
-		cls: "muse-vault-otd-link internal-link",
+		cls: "clio-vault-otd-link internal-link",
 		text: memory.file.basename,
 		href: memory.file.path,
 	});
@@ -91,7 +91,7 @@ function renderMemoryItem(
 
 	if (memory.preview) {
 		item.createEl("p", {
-			cls: "muse-vault-otd-preview",
+			cls: "clio-vault-otd-preview",
 			text: memory.preview,
 		});
 	}

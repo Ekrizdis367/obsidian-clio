@@ -8,7 +8,7 @@ import { setIcon, setTooltip } from "obsidian";
  * cards visibly belong to the same plugin instead of each looking
  * homemade.
  *
- * @param card  the card root (`.muse-quote-card`, `.muse-fact-card`, …)
+ * @param card  the card root (`.clio-quote-card`, `.clio-fact-card`, …)
  * @param title sentence-cased label - rendered uppercase via CSS
  * @returns the actions container - append icon buttons here. The
  *          container is empty by default and stays out of layout flow.
@@ -17,9 +17,9 @@ export function createCardHeader(
 	card: HTMLElement,
 	title: string,
 ): { header: HTMLElement; actions: HTMLElement } {
-	const header = card.createDiv({ cls: "muse-card-header" });
-	header.createSpan({ cls: "muse-card-title", text: title });
-	const actions = header.createDiv({ cls: "muse-card-actions" });
+	const header = card.createDiv({ cls: "clio-card-header" });
+	header.createSpan({ cls: "clio-card-title", text: title });
+	const actions = header.createDiv({ cls: "clio-card-actions" });
 	return { header, actions };
 }
 
@@ -33,7 +33,7 @@ export function appendCardIconButton(
 	onClick: () => void,
 ): HTMLButtonElement {
 	const btn = parent.createEl("button", {
-		cls: "muse-icon-button",
+		cls: "clio-icon-button",
 		attr: { type: "button", "aria-label": tooltip },
 	});
 	setIcon(btn, icon);
@@ -51,7 +51,7 @@ export function appendCardLinkIcon(
 	tooltip: string,
 ): HTMLAnchorElement {
 	const link = parent.createEl("a", {
-		cls: "muse-icon-button",
+		cls: "clio-icon-button",
 		href,
 	});
 	setIcon(link, "external-link");

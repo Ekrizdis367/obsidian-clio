@@ -1,5 +1,5 @@
 import type { App, TFile } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import { parseDateFromFilename, type DateParts } from "./format";
 
 /**
@@ -14,7 +14,7 @@ export interface VaultMemory {
 
 export interface VaultOnThisDayHost {
 	app: App;
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 }
 
 /**

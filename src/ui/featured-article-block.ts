@@ -39,15 +39,15 @@ class FeaturedArticleBlockChild extends MarkdownRenderChild {
 	private async render(): Promise<void> {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-featured-card",
+			cls: "clio-fact-card clio-featured-card",
 		});
 		try {
 			const today = await this.host.manager.getFeaturedArticleToday();
 			renderCard(card, today);
 		} catch (err) {
-			console.warn("[muse] featured article render failed", err);
+			console.warn("[clio] featured article render failed", err);
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "Could not load today's featured article.",
 			});
 		}
@@ -67,7 +67,7 @@ function renderCard(card: HTMLElement, today: FeaturedArticleRecord): void {
 
 	if (!today.fetched) {
 		card.createDiv({
-			cls: "muse-fact-loading",
+			cls: "clio-fact-loading",
 			text: "Fetching today's featured article…",
 		});
 		return;
@@ -78,28 +78,28 @@ function renderCard(card: HTMLElement, today: FeaturedArticleRecord): void {
 			today.fetchError === "fetch-disabled"
 				? "Wikipedia fetching is disabled. Enable it in settings."
 				: "No featured article available right now.";
-		card.createDiv({ cls: "muse-empty", text: message });
+		card.createDiv({ cls: "clio-empty", text: message });
 		return;
 	}
 
-	const body = card.createDiv({ cls: "muse-featured-body" });
-	const text = body.createDiv({ cls: "muse-featured-text" });
+	const body = card.createDiv({ cls: "clio-featured-body" });
+	const text = body.createDiv({ cls: "clio-featured-text" });
 
 	if (today.sourceUrl) {
 		const titleLink = text.createEl("a", {
-			cls: "muse-featured-title",
+			cls: "clio-featured-title",
 			text: today.title,
 			href: today.sourceUrl,
 		});
 		titleLink.setAttr("target", "_blank");
 		titleLink.setAttr("rel", "noopener");
 	} else {
-		text.createDiv({ cls: "muse-featured-title", text: today.title });
+		text.createDiv({ cls: "clio-featured-title", text: today.title });
 	}
 
 	if (today.extract) {
 		text.createEl("p", {
-			cls: "muse-featured-extract",
+			cls: "clio-featured-extract",
 			text: today.extract,
 		});
 	}

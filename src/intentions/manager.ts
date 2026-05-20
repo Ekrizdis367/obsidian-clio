@@ -1,5 +1,5 @@
 import { Events } from "obsidian";
-import { MAX_INTENTIONS, type MuseSettings } from "../settings";
+import { MAX_INTENTIONS, type ClioSettings } from "../settings";
 import type { Intention } from "../types";
 import {
 	formatLocalIsoDate,
@@ -8,7 +8,7 @@ import {
 } from "../utils/date";
 
 export interface IntentionsHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	save(): Promise<void>;
 }
 

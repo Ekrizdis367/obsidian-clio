@@ -1,5 +1,5 @@
 import { Events } from "obsidian";
-import { MAX_WORD_HISTORY, type MuseSettings } from "../settings";
+import { MAX_WORD_HISTORY, type ClioSettings } from "../settings";
 import type {
 	CachedDefinition,
 	DailyWordRecord,
@@ -11,7 +11,7 @@ import { fetchDefinition } from "./api";
 import { buildWordList } from "./wordlist";
 
 export interface WordManagerHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	save(): Promise<void>;
 }
 
@@ -173,7 +173,7 @@ export class WordManager extends Events {
 			await this.host.save();
 			this.trigger("changed");
 		} catch (err) {
-			console.warn("[muse] populateDefinitions failed", err);
+			console.warn("[clio] populateDefinitions failed", err);
 			record.fetched = true;
 			record.fetchError = err instanceof Error ? err.message : "unknown";
 			await this.host.save();
@@ -183,7 +183,7 @@ export class WordManager extends Events {
 }
 
 function cacheDefinition(
-	settings: MuseSettings,
+	settings: ClioSettings,
 	definition: CachedDefinition,
 ): void {
 	const key = definition.word.toLowerCase();
@@ -202,7 +202,7 @@ function cacheDefinition(
  * the recap with duplicates, and trims to MAX_WORD_HISTORY entries.
  */
 function recordHistory(
-	settings: MuseSettings,
+	settings: ClioSettings,
 	record: DailyWordRecord,
 ): void {
 	if (!settings.trackWordHistory) return;

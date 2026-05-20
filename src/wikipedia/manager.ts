@@ -1,5 +1,5 @@
 import { Events } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import type {
 	DailyFactRecord,
 	FactCandidate,
@@ -9,7 +9,7 @@ import { parseLocalIsoDate, todayLocalIso } from "../utils/date";
 import { fetchWikipediaFeed, type WikipediaFeed } from "./api";
 
 export interface WikipediaManagerHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	save(): Promise<void>;
 }
 
@@ -121,7 +121,7 @@ export class WikipediaManager extends Events {
 			this.trigger("changed");
 			return stub;
 		} catch (err) {
-			console.warn("[muse] fact roll failed", err);
+			console.warn("[clio] fact roll failed", err);
 			stub.fetched = true;
 			stub.fetchError = err instanceof Error ? err.message : "unknown";
 			await this.host.save();
@@ -218,7 +218,7 @@ export class WikipediaManager extends Events {
 			this.trigger("changed");
 			return stub;
 		} catch (err) {
-			console.warn("[muse] featured article fetch failed", err);
+			console.warn("[clio] featured article fetch failed", err);
 			stub.fetched = true;
 			stub.fetchError = err instanceof Error ? err.message : "unknown";
 			await this.host.save();

@@ -1,10 +1,10 @@
 import { App, Modal, Notice, Setting, TextAreaComponent } from "obsidian";
 import { appendQuoteToInbox } from "../quotes/inbox";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import type { QuoteStore } from "../quotes/store";
 
 export interface AddQuoteHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	store: QuoteStore;
 }
 
@@ -40,7 +40,7 @@ export class AddQuoteModal extends Modal {
 					this.text = v;
 				});
 				ta.inputEl.rows = 4;
-				ta.inputEl.addClass("muse-add-quote-textarea");
+				ta.inputEl.addClass("clio-add-quote-textarea");
 			});
 
 		new Setting(contentEl).setName("Author").addText((text) => {
@@ -69,7 +69,7 @@ export class AddQuoteModal extends Modal {
 
 		new Setting(contentEl)
 			.setDesc(
-				`Saved as a \`muse-quote\` code block at the end of ${this.host.getSettings().quotesInboxPath}.`,
+				`Saved as a \`clio-quote\` code block at the end of ${this.host.getSettings().quotesInboxPath}.`,
 			)
 			.addButton((btn) =>
 				btn.setButtonText("Cancel").onClick(() => this.close()),
@@ -113,7 +113,7 @@ export class AddQuoteModal extends Modal {
 			this.close();
 			await this.host.store.refresh();
 		} catch (err) {
-			console.warn("[muse] add quote failed", err);
+			console.warn("[clio] add quote failed", err);
 			new Notice("Could not save quote. See console for details.");
 		}
 	}

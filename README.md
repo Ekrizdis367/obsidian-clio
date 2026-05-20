@@ -1,38 +1,42 @@
-# Muse
+# Clio
 
-An Obsidian community plugin that turns your daily note into a small-but-rich daily ritual: a **quote** from your own vault, a **word of the day** with definition and examples, **on this day** in history (and optionally in your own vault), today's Wikipedia **featured article** and **picture of the day**, a **reflection prompt**, a **one-line journal**, **daily intentions** with streak tracking, and a **sky card** with the moon phase plus sunrise / sunset.
+An Obsidian community plugin that turns your daily note into a small-but-rich daily ritual.
+
+> **Upgrading from Muse or Almanac (pre-release)?** Install this plugin as **Clio** (`clio`). Existing `muse-quote`, `almanac-quote`, `muse-static`, and `almanac-static` blocks still work; new quotes use `clio-quote`. Copy `plugins/muse/data.json` or `plugins/almanac/data.json` to `plugins/clio/data.json` if you had an older folder installed separately.
+
+A daily ritual in your notes: a **quote** from your own vault, a **word of the day** with definition and examples, **on this day** in history (and optionally in your own vault), today's Wikipedia **featured article** and **picture of the day**, a **reflection prompt**, a **one-line journal**, **daily intentions** with streak tracking, and a **sky card** with the moon phase plus sunrise / sunset.
 
 ## Screenshots
 
 Quote of the day (from your vault):
 
-![Muse quote of the day](assets/quote.png)
+![Clio quote of the day](assets/quote.png)
 
 Word of the day with definition and examples:
 
-![Muse word of the day](assets/wordoftheday.png)
+![Clio word of the day](assets/wordoftheday.png)
 
 Today's Wikipedia featured article (text excerpt):
 
-![Muse featured article](assets/featuredarticle.png)
+![Clio featured article](assets/featuredarticle.png)
 
 Reflection prompt of the day:
 
-![Muse reflection prompt](assets/reflection.png)
+![Clio reflection prompt](assets/reflection.png)
 
 One-line journal:
 
-![Muse one-line journal](assets/onelinejournal.png)
+![Clio one-line journal](assets/onelinejournal.png)
 
 Sky today (moon phase and sunrise / sunset):
 
-![Muse sky today card](assets/skytoday.png)
+![Clio sky today card](assets/skytoday.png)
 
 ## Features
 
 ### Quote of the day, from your vault
 
-- Scans configured folders (or your entire vault) for `muse-quote` code blocks (the canonical, opt-in format) and, optionally, markdown blockquotes / Obsidian `[!quote]` callouts.
+- Scans configured folders (or your entire vault) for `clio-quote` code blocks (the canonical, opt-in format) and, optionally, markdown blockquotes / Obsidian `[!quote]` callouts.
 - Picks the **same quote all day**, deterministically. The next day rolls a new one.
 - Renders inside any note via a `quote-of-the-day` code block, ideal for daily-note templates.
 - Tag-aware: filter the daily pick to a subset like `philosophy` or `programming`.
@@ -40,7 +44,7 @@ Sky today (moon phase and sunrise / sunset):
 ### Add and track quotes
 
 - An **Add quote** modal captures text, author, source, and tags.
-- Quotes are appended to a configurable inbox file as `muse-quote` blocks - editable like any other note, and immune to false positives from prose blockquotes.
+- Quotes are appended to a configurable inbox file as `clio-quote` blocks - editable like any other note, and immune to false positives from prose blockquotes.
 - A **Quote library** sidebar view lists every quote with search, tag filter, favorites, and one-click jump-to-source.
 
 ### Word of the day
@@ -50,7 +54,7 @@ Sky today (moon phase and sunrise / sunset):
 - Looks up definition and example sentences from the free [dictionaryapi.dev](https://dictionaryapi.dev) API and caches them locally.
 - Skip a word to dismiss it forever (toggleable). Reroll today's word any time.
 - Renders via a `word-of-the-day` code block.
-- Add your own words in **Settings → Muse**, and either merge with the built-in list or replace it.
+- Add your own words in **Settings → Clio**, and either merge with the built-in list or replace it.
 
 ### Word recap (toggleable)
 
@@ -89,7 +93,7 @@ Sky today (moon phase and sunrise / sunset):
 
 ### One-line journal
 
-- A single short line per day, stored locally in Muse's data file.
+- A single short line per day, stored locally in Clio's data file.
 - Inline, editable text input - press **Enter** or click away to save.
 - Optionally lists the same calendar day's entries from past years right under the input ("on this day, two years ago you wrote …").
 - Renders via a `one-line-journal` code block.
@@ -186,7 +190,7 @@ A `random-quote` block is also available as a shorthand for `mode: random`.
 To drop a self-contained quote anywhere in your notes (rendered as a card, indexed for the daily picker):
 
 ````markdown
-```muse-quote
+```clio-quote
 quote: Make new mistakes.
 author: Esther Dyson
 tags: productivity
@@ -240,7 +244,7 @@ reveal: false
 | **Insert quote of the day** | Inserts today's quote at the cursor as a blockquote. |
 | **Insert random quote** | Inserts a random quote at the cursor. |
 | **Insert quote-of-the-day block** | Drops a `quote-of-the-day` code block. |
-| **Insert blank quote block** | Drops a blank `muse-quote` block, ready to paste a quote into. |
+| **Insert blank quote block** | Drops a blank `clio-quote` block, ready to paste a quote into. |
 | **Insert word-of-the-day block** | Drops a `word-of-the-day` code block. |
 | **Insert on-this-day block** | Drops an `on-this-day` code block. |
 | **Insert featured article block** | Drops a `featured-article` code block. |
@@ -259,15 +263,15 @@ reveal: false
 | **Show a different reflection prompt** | Re-pick today's prompt. |
 | **Skip today's reflection prompt** | Dismiss the prompt and pick a new one. |
 | **Refresh quote index** | Re-scan the configured folders. |
-| **Convert blockquote quotes to structured blocks** | Walks every blockquote / quote callout in scope - and every `muse-quote` block whose `quote:` field still has inline attribution - and lets you confirm one-at-a-time whether to migrate it. |
+| **Convert blockquote quotes to structured blocks** | Walks every blockquote / quote callout in scope - and every `clio-quote` block whose `quote:` field still has inline attribution - and lets you confirm one-at-a-time whether to migrate it. |
 | **Complete all of today's intentions** | One-shot mark-everything-done. |
 
 ## Quote source format
 
-The recommended format is a `muse-quote` code block. It's explicit, immune to false positives, and renders as a styled card in reading mode:
+The recommended format is a `clio-quote` code block. It's explicit, immune to false positives, and renders as a styled card in reading mode:
 
 ````markdown
-```muse-quote
+```clio-quote
 quote: Of all people only those are at leisure who make time for philosophy, only they truly live.
 author: Seneca
 source: On the Shortness of Life
@@ -282,20 +286,20 @@ Field rules:
 - `tags:` is comma-separated. The `#` prefix is optional.
 - Lines starting with `#` are treated as comments.
 
-**Migrating existing quotes**: run **Convert blockquote quotes to structured blocks** from the command palette. It walks every candidate one at a time, shows you the original, lets you edit the auto-detected author / source / tags, and previews the proposed `muse-quote` replacement live. Stop any time - already-converted quotes stay converted.
+**Migrating existing quotes**: run **Convert blockquote quotes to structured blocks** from the command palette. It walks every candidate one at a time, shows you the original, lets you edit the auto-detected author / source / tags, and previews the proposed `clio-quote` replacement live. Stop any time - already-converted quotes stay converted.
 
 The migration covers two cases:
 
 - Bare blockquotes and `[!quote]` callouts that haven't been structured yet.
-- Existing `muse-quote` blocks whose `quote:` field still contains inline attribution like `quote: "..." — Seneca`. The tool offers to split the author (and source, if you wrote `Author, Source`) into their own fields.
+- Existing `clio-quote` blocks whose `quote:` field still contains inline attribution like `quote: "..." — Seneca`. The tool offers to split the author (and source, if you wrote `Author, Source`) into their own fields.
 
-For false positives in a blockquote (e.g. a `> SFP = 1G world` technical aside), click **Mark as not a quote**. That appends an invisible `%%muse:ignore%%` marker so Muse permanently skips it - both the migration tool and the daily / random pickers respect the marker. Any line containing the substring `muse:ignore` works (e.g. `<!-- muse:ignore -->` if you'd rather use an HTML comment).
+For false positives in a blockquote (e.g. a `> SFP = 1G world` technical aside), click **Mark as not a quote**. That appends an invisible `%%clio:ignore%%` marker so Clio permanently skips it - both the migration tool and the daily / random pickers respect the marker. Any line containing the substring `clio:ignore` works (e.g. `<!-- clio:ignore -->` if you'd rather use an HTML comment).
 
-For an already-structured `muse-quote` block you'd rather leave alone (e.g. you intentionally kept the attribution inline), click **Keep as is**. That inserts a `# muse:keep` comment line right after the opening fence so the migration tool stops flagging it. The block is still indexed as a quote.
+For an already-structured `clio-quote` block you'd rather leave alone (e.g. you intentionally kept the attribution inline), click **Keep as is**. That inserts a `# clio:keep` comment line right after the opening fence so the migration tool stops flagging it. The block is still indexed as a quote.
 
 To reverse either marker, just delete it from the source.
 
-If you'd rather keep using markdown blockquotes / `[!quote]` callouts, switch **Settings → Muse → Quote source** away from "muse-quote blocks only". Attribution still works - if the last non-empty line begins with `—`, `–`, `--`, `-` (followed by a space), or `by`, it's parsed as the author (anything after the first comma becomes the source):
+If you'd rather keep using markdown blockquotes / `[!quote]` callouts, switch **Settings → Clio → Quote source** away from "clio-quote blocks only". Attribution still works - if the last non-empty line begins with `—`, `–`, `--`, `-` (followed by a space), or `by`, it's parsed as the author (anything after the first comma becomes the source):
 
 ```markdown
 > The unexamined life is not worth living.
@@ -309,9 +313,9 @@ Inline `#tags` on quote lines are extracted and stored on the quote.
 
 ## Settings
 
-Available in **Settings → Community plugins → Muse**.
+Available in **Settings → Community plugins → Clio**.
 
-- **Quotes** - folders to scan, inbox file, source mode (muse-quote only / + blockquotes / + callouts / + both), require author, refresh, clear favorites.
+- **Quotes** - folders to scan, inbox file, source mode (clio-quote only / + blockquotes / + callouts / + both), require author, refresh, clear favorites.
 - **Word of the day** - online definition lookup, dismissals, custom list, replace built-in, reroll, history tracking.
 - **Wikipedia daily** - master `Fetch events online` switch, on-this-day dismissals, featured-article toggle (text-only).
 - **Reflection prompts** - custom prompts (one per line), replace built-in, dismissals.
@@ -322,22 +326,22 @@ Available in **Settings → Community plugins → Muse**.
 
 ## Templater integration
 
-The plugin exposes an API at `app.plugins.plugins["muse"].api`. Every daily card has a matching `*Markdown()` helper that returns a self-contained, static markdown snapshot - perfect for Templater dropping the day's value into a daily note (it won't change tomorrow, since the markdown is baked into the file).
+The plugin exposes an API at `app.plugins.plugins["clio"].api`. Every daily card has a matching `*Markdown()` helper that returns a self-contained, static markdown snapshot - perfect for Templater dropping the day's value into a daily note (it won't change tomorrow, since the markdown is baked into the file).
 
-Each helper emits a **`muse-static` code block** with the day's data baked in as YAML. The plugin renders these blocks using the same DOM and CSS classes as the live `quote-of-the-day` / `word-of-the-day` / etc. codeblock cards, so the drop looks identical to the live block - except the data is frozen in your daily note forever. Reopen the same note tomorrow and you'll see the same word/quote/fact you saw the day you wrote it. Live-state-only controls (Skip, Show different) are omitted; "Copy" buttons and external "Read more" links are kept since they only need the baked data. The codeblock language is unique to static drops, so the indexer never picks them up - your daily-note quote won't show up as a duplicate in the quote library, and you don't need any extra ignore marker.
+Each helper emits a **`clio-static` code block** with the day's data baked in as YAML. The plugin renders these blocks using the same DOM and CSS classes as the live `quote-of-the-day` / `word-of-the-day` / etc. codeblock cards, so the drop looks identical to the live block - except the data is frozen in your daily note forever. Reopen the same note tomorrow and you'll see the same word/quote/fact you saw the day you wrote it. Live-state-only controls (Skip, Show different) are omitted; "Copy" buttons and external "Read more" links are kept since they only need the baked data. The codeblock language is unique to static drops, so the indexer never picks them up - your daily-note quote won't show up as a duplicate in the quote library, and you don't need any extra ignore marker.
 
 Drop everything you want with one block:
 
 ```javascript
 <%*
-const muse = app.plugins.plugins["muse"]?.api;
-tR += muse?.getQuoteOfTheDayMarkdown() ?? "";
-tR += await muse?.getWordOfTheDayMarkdown() ?? "";
-tR += await muse?.getFactOfTheDayMarkdown() ?? "";
-tR += await muse?.getFeaturedArticleMarkdown() ?? "";
-tR += await muse?.getPromptOfTheDayMarkdown() ?? "";
-tR += muse?.getIntentionsMarkdown() ?? "";
-tR += muse?.getJournalAcrossYearsMarkdown() ?? "";
+const clio = app.plugins.plugins["clio"]?.api;
+tR += clio?.getQuoteOfTheDayMarkdown() ?? "";
+tR += await clio?.getWordOfTheDayMarkdown() ?? "";
+tR += await clio?.getFactOfTheDayMarkdown() ?? "";
+tR += await clio?.getFeaturedArticleMarkdown() ?? "";
+tR += await clio?.getPromptOfTheDayMarkdown() ?? "";
+tR += clio?.getIntentionsMarkdown() ?? "";
+tR += clio?.getJournalAcrossYearsMarkdown() ?? "";
 %>
 ```
 
@@ -371,7 +375,7 @@ API surface:
 
 ## Privacy
 
-Muse makes only two kinds of network request, both to free, unauthenticated public APIs, and only when the corresponding feature is enabled:
+Clio makes only two kinds of network request, both to free, unauthenticated public APIs, and only when the corresponding feature is enabled:
 
 - `GET https://api.dictionaryapi.dev/api/v2/entries/en/<word>` to look up the daily word's definition.
 - `GET https://api.wikimedia.org/feed/v1/wikipedia/en/featured/<YYYY>/<MM>/<DD>` to fetch Wikipedia's curated featured-content payload (on this day + today's featured article text). **Both Wikipedia cards share this single request** - one fetch per local day at most. The full payload is cached locally so re-rolls and skips never trigger another network call. The endpoint also returns Wikipedia's "picture of the day" and the featured article's lead image; the plugin **deliberately ignores both** and never displays any image from Wikipedia, since their daily images can include sensitive content without warning.
@@ -380,7 +384,7 @@ Both responses are cached locally in `data.json` and re-used for the rest of the
 
 No vault contents, file paths, or personal information are ever sent to either service. The sky card runs entirely locally - your country / region pick (and the derived coordinates) are stored in `data.json` and never leave the device. The vault on-this-day card reads daily notes from disk only; nothing is uploaded.
 
-Requests carry only a generic `User-Agent: muse (Obsidian community plugin)` header.
+Requests carry only a generic `User-Agent: clio (Obsidian community plugin)` header.
 
 ## Development
 

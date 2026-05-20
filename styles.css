@@ -5,10 +5,10 @@
  * with both light and dark themes without having to redeclare colors.
  */
 
-.muse-quote-card,
-.muse-word-card,
-.muse-fact-card,
-.muse-intentions-card {
+.clio-quote-card,
+.clio-word-card,
+.clio-fact-card,
+.clio-intentions-card {
 	border: 1px solid var(--background-modifier-border);
 	border-radius: var(--radius-s, 4px);
 	padding: 0.45em 0.65em;
@@ -35,10 +35,10 @@
  * across both modes. Inter-card spacing is driven by the card's own
  * margin (above), so this rule sets the wrapper's margin to 0.
  */
-:is(pre, .el-pre, .cm-embed-block):has(.muse-quote-card),
-:is(pre, .el-pre, .cm-embed-block):has(.muse-word-card),
-:is(pre, .el-pre, .cm-embed-block):has(.muse-fact-card),
-:is(pre, .el-pre, .cm-embed-block):has(.muse-intentions-card) {
+:is(pre, .el-pre, .cm-embed-block):has(.clio-quote-card),
+:is(pre, .el-pre, .cm-embed-block):has(.clio-word-card),
+:is(pre, .el-pre, .cm-embed-block):has(.clio-fact-card),
+:is(pre, .el-pre, .cm-embed-block):has(.clio-intentions-card) {
 	margin: 0;
 	padding: 0;
 	background: transparent;
@@ -52,7 +52,7 @@
  * to the top-right corner. Padding-right reserves space so a long
  * title cannot overlap the action icons.
  */
-.muse-card-header {
+.clio-card-header {
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -62,7 +62,7 @@
 	padding: 0 2.4em;
 }
 
-.muse-card-title {
+.clio-card-title {
 	font-size: 0.7em;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
@@ -71,7 +71,7 @@
 	text-align: center;
 }
 
-.muse-card-actions {
+.clio-card-actions {
 	position: absolute;
 	top: 50%;
 	right: 0;
@@ -81,7 +81,7 @@
 	gap: 0.15em;
 }
 
-.muse-card-actions:empty {
+.clio-card-actions:empty {
 	display: none;
 }
 
@@ -92,7 +92,7 @@
  * a-callout inside the card chrome. We still reset padding/border
  * defensively so themes that style <p> can't reintroduce the issue.
  */
-.muse-quote-text {
+.clio-quote-text {
 	font-size: 0.95em;
 	line-height: 1.4;
 	font-style: italic;
@@ -103,20 +103,20 @@
 	color: var(--text-normal);
 }
 
-.muse-quote-attribution {
+.clio-quote-attribution {
 	color: var(--text-muted);
 	font-size: 0.85em;
 	text-align: right;
 	margin-bottom: 0.3em;
 }
 
-.muse-quote-tags {
+.clio-quote-tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 }
 
-.muse-tag {
+.clio-tag {
 	background-color: var(--background-modifier-hover);
 	color: var(--text-muted);
 	padding: 0.05em 0.4em;
@@ -124,16 +124,16 @@
 	font-size: 0.75em;
 }
 
-.muse-tag-clickable {
+.clio-tag-clickable {
 	cursor: pointer;
 }
 
-.muse-tag-clickable:hover {
+.clio-tag-clickable:hover {
 	background-color: var(--background-modifier-active-hover);
 	color: var(--text-normal);
 }
 
-.muse-link-button {
+.clio-link-button {
 	background: transparent;
 	border: 1px solid var(--background-modifier-border);
 	color: var(--text-muted);
@@ -145,19 +145,19 @@
 	transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
 }
 
-.muse-link-button:hover {
+.clio-link-button:hover {
 	background-color: var(--background-modifier-hover);
 	color: var(--text-normal);
 }
 
-.muse-link-button-active {
+.clio-link-button-active {
 	color: var(--interactive-accent);
 	border-color: var(--interactive-accent);
 }
 
 /* Compact icon-only buttons used in card headers */
 
-.muse-icon-button {
+.clio-icon-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -173,22 +173,22 @@
 	transition: background-color 0.1s ease, color 0.1s ease;
 }
 
-.muse-icon-button .svg-icon,
-.muse-icon-button svg {
+.clio-icon-button .svg-icon,
+.clio-icon-button svg {
 	width: 0.9em;
 	height: 0.9em;
 }
 
-.muse-icon-button:hover {
+.clio-icon-button:hover {
 	background-color: var(--background-modifier-hover);
 	color: var(--text-normal);
 }
 
-a.muse-icon-button {
+a.clio-icon-button {
 	text-decoration: none;
 }
 
-.muse-empty {
+.clio-empty {
 	color: var(--text-muted);
 	text-align: center;
 	padding: 0.5em;
@@ -198,11 +198,11 @@ a.muse-icon-button {
 
 /* Word card */
 
-.muse-word-body {
+.clio-word-body {
 	display: block;
 }
 
-.muse-word-title {
+.clio-word-title {
 	display: block;
 	margin: 0 0 0.1em 0;
 	font-size: 1.35em;
@@ -213,7 +213,7 @@ a.muse-icon-button {
 	letter-spacing: 0.02em;
 }
 
-.muse-word-meta {
+.clio-word-meta {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
@@ -221,24 +221,24 @@ a.muse-icon-button {
 	margin-bottom: 0.35em;
 }
 
-.muse-word-content {
+.clio-word-content {
 	display: block;
 }
 
-.muse-word-pos {
+.clio-word-pos {
 	font-size: 0.78em;
 	color: var(--text-accent);
 	font-style: italic;
 	font-weight: 500;
 }
 
-.muse-word-phonetic {
+.clio-word-phonetic {
 	font-size: 0.82em;
 	color: var(--text-muted);
 	font-family: var(--font-monospace, monospace);
 }
 
-.muse-word-defs {
+.clio-word-defs {
 	margin: 0;
 	padding-left: 1.2em;
 	color: var(--text-normal);
@@ -246,15 +246,15 @@ a.muse-icon-button {
 	line-height: 1.35;
 }
 
-.muse-word-defs li {
+.clio-word-defs li {
 	margin-bottom: 0.1em;
 }
 
-.muse-word-examples {
+.clio-word-examples {
 	margin-top: 0.35em;
 }
 
-.muse-word-examples-label {
+.clio-word-examples-label {
 	font-size: 0.7em;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
@@ -262,19 +262,19 @@ a.muse-icon-button {
 	margin-bottom: 0.1em;
 }
 
-.muse-word-examples ul {
+.clio-word-examples ul {
 	margin: 0;
 	padding-left: 1.2em;
 	font-size: 0.85em;
 	line-height: 1.35;
 }
 
-.muse-word-examples li {
+.clio-word-examples li {
 	color: var(--text-muted);
 	font-style: italic;
 }
 
-.muse-word-loading {
+.clio-word-loading {
 	color: var(--text-muted);
 	font-style: italic;
 	font-size: 0.85em;
@@ -283,21 +283,21 @@ a.muse-icon-button {
 
 /* Fact card */
 
-.muse-fact-text {
+.clio-fact-text {
 	margin: 0;
 	font-size: 0.92em;
 	line-height: 1.4;
 	color: var(--text-normal);
 }
 
-.muse-fact-year {
+.clio-fact-year {
 	font-weight: 600;
 	color: var(--text-accent);
 	font-variant-numeric: tabular-nums;
 	margin-right: 0.25em;
 }
 
-.muse-fact-loading {
+.clio-fact-loading {
 	color: var(--text-muted);
 	font-style: italic;
 	font-size: 0.85em;
@@ -306,36 +306,36 @@ a.muse-icon-button {
 
 /* Library view */
 
-.muse-library {
+.clio-library {
 	padding: 0.5em 0.75em 1em;
 	overflow-y: auto;
 }
 
-.muse-library-header {
+.clio-library-header {
 	display: flex;
 	flex-direction: column;
 	gap: 0.25em;
 	margin-bottom: 0.75em;
 }
 
-.muse-library-header h3 {
+.clio-library-header h3 {
 	margin: 0;
 }
 
-.muse-library-stats {
+.clio-library-stats {
 	color: var(--text-muted);
 	font-size: 0.85em;
 }
 
-.muse-library-controls {
+.clio-library-controls {
 	display: flex;
 	flex-direction: column;
 	gap: 0.4em;
 	margin-bottom: 1em;
 }
 
-.muse-library-search,
-.muse-library-tag-filter {
+.clio-library-search,
+.clio-library-tag-filter {
 	width: 100%;
 	background-color: var(--background-primary);
 	border: 1px solid var(--background-modifier-border);
@@ -345,7 +345,7 @@ a.muse-icon-button {
 	font-size: 0.9em;
 }
 
-.muse-library-fav-toggle {
+.clio-library-fav-toggle {
 	display: flex;
 	align-items: center;
 	gap: 0.4em;
@@ -354,32 +354,32 @@ a.muse-icon-button {
 	cursor: pointer;
 }
 
-.muse-library-list {
+.clio-library-list {
 	display: flex;
 	flex-direction: column;
 	gap: 0.45em;
 }
 
-.muse-library-item {
+.clio-library-item {
 	border: 1px solid var(--background-modifier-border);
 	border-radius: var(--radius-s, 4px);
 	padding: 0.45em 0.6em;
 	background-color: var(--background-primary);
 }
 
-.muse-library-item .muse-quote-text {
+.clio-library-item .clio-quote-text {
 	cursor: pointer;
 	margin: 0 0 0.2em 0;
 }
 
-.muse-library-item-meta {
+.clio-library-item-meta {
 	display: flex;
 	flex-direction: column;
 	gap: 0.2em;
 	margin-bottom: 0.3em;
 }
 
-.muse-library-item-actions {
+.clio-library-item-actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
@@ -387,22 +387,22 @@ a.muse-icon-button {
 
 /* Daily intentions - inline sentence */
 
-.muse-intentions-sentence {
+.clio-intentions-sentence {
 	font-size: 1em;
 	line-height: 1.5;
 	color: var(--text-normal);
 	padding: 0.05em 0;
 }
 
-.muse-intentions-lead {
+.clio-intentions-lead {
 	color: var(--text-muted);
 }
 
-.muse-intentions-punct {
+.clio-intentions-punct {
 	color: var(--text-muted);
 }
 
-.muse-intentions-word {
+.clio-intentions-word {
 	display: inline-flex;
 	align-items: baseline;
 	background: none;
@@ -416,22 +416,22 @@ a.muse-icon-button {
 	border-radius: 0;
 }
 
-.muse-intentions-word .muse-intentions-word-text {
+.clio-intentions-word .clio-intentions-word-text {
 	border-bottom: 1.5px dashed
 		color-mix(in srgb, var(--text-muted) 50%, transparent);
 	transition: color 0.1s ease, border-color 0.1s ease;
 }
 
-.muse-intentions-word:hover .muse-intentions-word-text {
+.clio-intentions-word:hover .clio-intentions-word-text {
 	color: var(--text-accent);
 	border-bottom-color: var(--text-accent);
 }
 
-.muse-intentions-word.is-done {
+.clio-intentions-word.is-done {
 	color: var(--text-muted);
 }
 
-.muse-intentions-word.is-done .muse-intentions-word-text {
+.clio-intentions-word.is-done .clio-intentions-word-text {
 	text-decoration: line-through;
 	text-decoration-thickness: 1.5px;
 	text-decoration-color: color-mix(
@@ -443,11 +443,11 @@ a.muse-icon-button {
 	color: var(--text-muted);
 }
 
-.muse-intentions-word.is-done:hover .muse-intentions-word-text {
+.clio-intentions-word.is-done:hover .clio-intentions-word-text {
 	color: var(--text-normal);
 }
 
-.muse-intentions-word-streak {
+.clio-intentions-word-streak {
 	font-size: 0.75em;
 	color: var(--text-accent);
 	font-variant-numeric: tabular-nums;
@@ -457,7 +457,7 @@ a.muse-icon-button {
 	text-decoration: none;
 }
 
-.muse-intentions-celebrate {
+.clio-intentions-celebrate {
 	margin-left: 0.5em;
 	font-size: 0.85em;
 	color: var(--text-accent);
@@ -466,15 +466,15 @@ a.muse-icon-button {
 
 /* Featured article card */
 
-.muse-featured-body {
+.clio-featured-body {
 	margin-bottom: 0;
 }
 
-.muse-featured-text {
+.clio-featured-text {
 	min-width: 0;
 }
 
-.muse-featured-title {
+.clio-featured-title {
 	display: block;
 	font-size: 0.95em;
 	font-weight: 600;
@@ -482,11 +482,11 @@ a.muse-icon-button {
 	margin-bottom: 0.2em;
 }
 
-.muse-featured-title:hover {
+.clio-featured-title:hover {
 	color: var(--text-accent);
 }
 
-.muse-featured-extract {
+.clio-featured-extract {
 	margin: 0;
 	font-size: 0.88em;
 	line-height: 1.4;
@@ -495,47 +495,47 @@ a.muse-icon-button {
 
 /* Vault on this day */
 
-.muse-vault-otd-list {
+.clio-vault-otd-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.muse-vault-otd-item {
+.clio-vault-otd-item {
 	padding: 0.3em 0;
 	border-bottom: 1px dashed var(--background-modifier-border);
 }
 
-.muse-vault-otd-item:last-child {
+.clio-vault-otd-item:last-child {
 	border-bottom: none;
 }
 
-.muse-vault-otd-head {
+.clio-vault-otd-head {
 	display: flex;
 	align-items: baseline;
 	gap: 0.45em;
 	margin-bottom: 0.1em;
 }
 
-.muse-vault-otd-year {
+.clio-vault-otd-year {
 	font-size: 0.92em;
 	font-weight: 600;
 	color: var(--text-accent);
 	font-variant-numeric: tabular-nums;
 }
 
-.muse-vault-otd-ago {
+.clio-vault-otd-ago {
 	font-size: 0.72em;
 	color: var(--text-muted);
 }
 
-.muse-vault-otd-link {
+.clio-vault-otd-link {
 	display: inline-block;
 	font-size: 0.85em;
 	color: var(--text-normal);
 }
 
-.muse-vault-otd-preview {
+.clio-vault-otd-preview {
 	margin: 0.1em 0 0 0;
 	font-size: 0.82em;
 	color: var(--text-muted);
@@ -545,7 +545,7 @@ a.muse-icon-button {
 
 /* Reflection prompts */
 
-.muse-prompt-text {
+.clio-prompt-text {
 	margin: 0 0 0.4em 0;
 	font-size: 0.95em;
 	line-height: 1.4;
@@ -557,13 +557,13 @@ a.muse-icon-button {
 
 /* One-line journal */
 
-.muse-journal-editor {
+.clio-journal-editor {
 	display: flex;
 	flex-direction: column;
 	gap: 0.2em;
 }
 
-.muse-journal-input {
+.clio-journal-input {
 	width: 100%;
 	background-color: var(--background-primary);
 	border: 1px solid var(--background-modifier-border);
@@ -573,26 +573,26 @@ a.muse-icon-button {
 	font-size: 0.88em;
 }
 
-.muse-journal-input:focus {
+.clio-journal-input:focus {
 	border-color: var(--interactive-accent);
 	outline: none;
 }
 
-.muse-journal-status {
+.clio-journal-status {
 	min-height: 1em;
 	color: var(--text-muted);
 	font-size: 0.72em;
 	text-align: right;
 }
 
-.muse-journal-history {
+.clio-journal-history {
 	list-style: none;
 	padding: 0.3em 0 0 0;
 	margin: 0.35em 0 0 0;
 	border-top: 1px dashed var(--background-modifier-border);
 }
 
-.muse-journal-history-item {
+.clio-journal-history-item {
 	display: grid;
 	grid-template-columns: auto auto 1fr;
 	column-gap: 0.4em;
@@ -600,32 +600,32 @@ a.muse-icon-button {
 	font-size: 0.82em;
 }
 
-.muse-journal-history-year {
+.clio-journal-history-year {
 	color: var(--text-accent);
 	font-weight: 600;
 	font-variant-numeric: tabular-nums;
 }
 
-.muse-journal-history-ago {
+.clio-journal-history-ago {
 	color: var(--text-muted);
 	font-size: 0.78em;
 }
 
-.muse-journal-history-text {
+.clio-journal-history-text {
 	color: var(--text-normal);
 	font-style: italic;
 }
 
 /* Sky card */
 
-.muse-sky-day {
+.clio-sky-day {
 	display: flex;
 	align-items: center;
 	gap: 0.6em;
 	margin-top: 0.1em;
 }
 
-.muse-sky-day-time {
+.clio-sky-day-time {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.35em;
@@ -636,23 +636,23 @@ a.muse-icon-button {
 	flex-shrink: 0;
 }
 
-.muse-sky-day-time-value {
+.clio-sky-day-time-value {
 	font-size: 0.95em;
 }
 
-.muse-sky-day-icon {
+.clio-sky-day-icon {
 	font-size: 1.15em;
 	line-height: 1;
 }
 
-.muse-sky-day-bar {
+.clio-sky-day-bar {
 	flex: 1;
 	position: relative;
 	min-width: 60px;
 	height: 0.9em;
 }
 
-.muse-sky-day-bar-track {
+.clio-sky-day-bar-track {
 	position: absolute;
 	top: 50%;
 	left: 0;
@@ -669,10 +669,10 @@ a.muse-icon-button {
 	opacity: 0.65;
 }
 
-.muse-sky-day-bar-marker {
+.clio-sky-day-bar-marker {
 	position: absolute;
 	top: 50%;
-	left: var(--muse-sky-progress, 0%);
+	left: var(--clio-sky-progress, 0%);
 	width: 0.7em;
 	height: 0.7em;
 	background: var(--interactive-accent);
@@ -681,7 +681,7 @@ a.muse-icon-button {
 	transform: translate(-50%, -50%);
 }
 
-.muse-sky-day-bar-marker.is-night {
+.clio-sky-day-bar-marker.is-night {
 	background: var(--background-modifier-border);
 	border-color: var(--background-secondary);
 }
@@ -692,7 +692,7 @@ a.muse-icon-button {
  * holds the day-length (or a setup/polar-day note) - center it
  * horizontally for a balanced look.
  */
-.muse-sky-meta {
+.clio-sky-meta {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -702,12 +702,12 @@ a.muse-icon-button {
 	color: var(--text-muted);
 }
 
-.muse-sky-day-length {
+.clio-sky-day-length {
 	font-variant-numeric: tabular-nums;
 	white-space: nowrap;
 }
 
-.muse-sky-meta-note {
+.clio-sky-meta-note {
 	font-style: italic;
 }
 
@@ -719,7 +719,7 @@ a.muse-icon-button {
  * strings like "Purva Bhadrapada" wrap cleanly instead of forcing
  * horizontal overflow.
  */
-.muse-sky-symbolic {
+.clio-sky-symbolic {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	column-gap: 0.6em;
@@ -731,7 +731,7 @@ a.muse-icon-button {
 	color: var(--text-muted);
 }
 
-.muse-sky-symbolic-col {
+.clio-sky-symbolic-col {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -740,7 +740,7 @@ a.muse-icon-button {
 	min-width: 0;
 }
 
-.muse-sky-symbolic-planet {
+.clio-sky-symbolic-planet {
 	display: inline-flex;
 	align-items: baseline;
 	gap: 0.25em;
@@ -750,7 +750,7 @@ a.muse-icon-button {
 	font-size: 0.78em;
 }
 
-.muse-sky-symbolic-glyph {
+.clio-sky-symbolic-glyph {
 	color: var(--text-accent);
 	font-size: 1.1em;
 	line-height: 1;
@@ -761,45 +761,45 @@ a.muse-icon-button {
  * size than text-style symbols like ☉ ☿, so we drop the size slightly
  * to keep the three planet rows visually balanced.
  */
-.muse-sky-symbolic-glyph--emoji {
+.clio-sky-symbolic-glyph--emoji {
 	font-size: 0.95em;
 }
 
-.muse-sky-symbolic-sign {
+.clio-sky-symbolic-sign {
 	color: var(--text-normal);
 	font-weight: 500;
 	line-height: 1.2;
 }
 
-.muse-sky-symbolic-extra {
+.clio-sky-symbolic-extra {
 	color: var(--text-muted);
 	font-size: 0.95em;
 	line-height: 1.2;
 }
 
-.muse-sky-symbolic-extra--rx {
+.clio-sky-symbolic-extra--rx {
 	color: var(--text-warning, var(--text-accent));
 	font-weight: 500;
 }
 
 /* Word recap */
 
-.muse-recap-list {
+.clio-recap-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.muse-recap-item {
+.clio-recap-item {
 	padding: 0.3em 0;
 	border-bottom: 1px dashed var(--background-modifier-border);
 }
 
-.muse-recap-item:last-child {
+.clio-recap-item:last-child {
 	border-bottom: none;
 }
 
-.muse-recap-head {
+.clio-recap-head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
@@ -807,43 +807,43 @@ a.muse-icon-button {
 	margin-bottom: 0.15em;
 }
 
-.muse-recap-word {
+.clio-recap-word {
 	font-size: 0.95em;
 	font-weight: 600;
 	color: var(--text-normal);
 	cursor: pointer;
 }
 
-.muse-recap-word:hover {
+.clio-recap-word:hover {
 	color: var(--text-accent);
 }
 
-.muse-recap-pos {
+.clio-recap-pos {
 	font-size: 0.78em;
 	color: var(--text-accent);
 	font-style: italic;
 }
 
-.muse-recap-date {
+.clio-recap-date {
 	font-size: 0.72em;
 	color: var(--text-muted);
 	font-variant-numeric: tabular-nums;
 }
 
-.muse-recap-definition {
+.clio-recap-definition {
 	display: flex;
 	gap: 0.45em;
 	align-items: baseline;
 }
 
-.muse-recap-definition-text {
+.clio-recap-definition-text {
 	flex: 1;
 	color: var(--text-normal);
 	font-size: 0.85em;
 	line-height: 1.35;
 }
 
-.muse-recap-hidden .muse-recap-definition-text {
+.clio-recap-hidden .clio-recap-definition-text {
 	color: transparent;
 	background-color: var(--background-modifier-hover);
 	border-radius: var(--radius-s, 4px);
@@ -851,13 +851,13 @@ a.muse-icon-button {
 	min-height: 1.2em;
 }
 
-.muse-recap-toggle {
+.clio-recap-toggle {
 	flex-shrink: 0;
 }
 
 /* Modal */
 
-.muse-add-quote-textarea {
+.clio-add-quote-textarea {
 	min-height: 6em;
 	width: 100%;
 	resize: vertical;
@@ -865,11 +865,11 @@ a.muse-icon-button {
 
 /* Migration modal */
 
-.muse-migrate-modal {
+.clio-migrate-modal {
 	max-width: min(640px, 90vw);
 }
 
-.muse-migrate-meta {
+.clio-migrate-meta {
 	display: flex;
 	align-items: center;
 	gap: 0.5em;
@@ -878,12 +878,12 @@ a.muse-icon-button {
 	color: var(--text-muted);
 }
 
-.muse-migrate-file {
+.clio-migrate-file {
 	font-family: var(--font-monospace);
 	word-break: break-all;
 }
 
-.muse-migrate-badge {
+.clio-migrate-badge {
 	display: inline-flex;
 	align-items: center;
 	padding: 0.1em 0.5em;
@@ -895,7 +895,7 @@ a.muse-icon-button {
 	letter-spacing: 0.05em;
 }
 
-.muse-migrate-section-label {
+.clio-migrate-section-label {
 	margin: 1em 0 0.4em;
 	font-size: 0.8em;
 	color: var(--text-muted);
@@ -903,7 +903,7 @@ a.muse-icon-button {
 	letter-spacing: 0.05em;
 }
 
-.muse-migrate-preview {
+.clio-migrate-preview {
 	margin: 0;
 	padding: 0.75em 1em;
 	background: var(--background-secondary);
@@ -915,13 +915,13 @@ a.muse-icon-button {
 	white-space: pre;
 }
 
-.muse-migrate-preview code {
+.clio-migrate-preview code {
 	background: none;
 	color: var(--text-normal);
 	font-family: var(--font-monospace);
 }
 
-.muse-migrate-buttons {
+.clio-migrate-buttons {
 	display: flex;
 	justify-content: flex-end;
 	gap: 0.5em;
@@ -929,17 +929,17 @@ a.muse-icon-button {
 	flex-wrap: wrap;
 }
 
-.muse-migrate-summary {
+.clio-migrate-summary {
 	margin: 0.5em 0 1em;
 	padding-left: 1.25em;
 	color: var(--text-muted);
 }
 
-.muse-migrate-summary li {
+.clio-migrate-summary li {
 	margin: 0.15em 0;
 }
 
-.muse-migrate-fields {
+.clio-migrate-fields {
 	display: grid;
 	grid-template-columns: max-content 1fr;
 	gap: 0.4em 0.75em;
@@ -947,18 +947,18 @@ a.muse-icon-button {
 	margin: 0.75em 0 0.25em;
 }
 
-.muse-migrate-field {
+.clio-migrate-field {
 	display: contents;
 }
 
-.muse-migrate-field label {
+.clio-migrate-field label {
 	font-size: 0.8em;
 	color: var(--text-muted);
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 }
 
-.muse-migrate-input {
+.clio-migrate-input {
 	width: 100%;
 	padding: 0.35em 0.5em;
 	background: var(--background-primary);
@@ -968,18 +968,18 @@ a.muse-icon-button {
 	color: var(--text-normal);
 }
 
-.muse-migrate-input:focus {
+.clio-migrate-input:focus {
 	outline: none;
 	border-color: var(--interactive-accent);
 }
 
-.muse-migrate-textarea {
+.clio-migrate-textarea {
 	min-height: 4em;
 	resize: vertical;
 	font-family: inherit;
 }
 
-.muse-migrate-danger {
+.clio-migrate-danger {
 	color: var(--text-error);
 }
 

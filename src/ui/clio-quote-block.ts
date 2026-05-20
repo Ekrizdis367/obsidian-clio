@@ -4,24 +4,24 @@ import {
 	Notice,
 } from "obsidian";
 import {
-	parseMuseQuoteSource,
-	type MuseQuoteFields,
-} from "../utils/muse-quote";
+	parseClioQuoteSource,
+	type ClioQuoteFields,
+} from "../utils/clio-quote";
 import {
 	appendCardIconButton,
 	createCardHeader,
 } from "./card-header";
 
 /**
- * Render a `muse-quote` code block in reading mode. The block is the
+ * Render a `clio-quote` code block in reading mode. The block is the
  * canonical authoring format for quotes - explicit, unambiguous, and
  * always indexed by the quote store regardless of the user's
  * `quoteSource` setting.
  */
-class MuseQuoteBlockChild extends MarkdownRenderChild {
+class ClioQuoteBlockChild extends MarkdownRenderChild {
 	constructor(
 		container: HTMLElement,
-		private readonly fields: MuseQuoteFields,
+		private readonly fields: ClioQuoteFields,
 	) {
 		super(container);
 	}
@@ -35,7 +35,7 @@ class MuseQuoteBlockChild extends MarkdownRenderChild {
 		const text = (this.fields["quote"] ?? this.fields["text"] ?? "").trim();
 		if (!text) {
 			this.containerEl.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: 'Quote block needs a "quote:" field.',
 			});
 			return;
@@ -48,27 +48,27 @@ class MuseQuoteBlockChild extends MarkdownRenderChild {
 			.map((t) => t.trim().replace(/^#/, ""))
 			.filter(Boolean);
 
-		const card = this.containerEl.createDiv({ cls: "muse-quote-card" });
+		const card = this.containerEl.createDiv({ cls: "clio-quote-card" });
 
 		const { actions } = createCardHeader(card, "Quote");
 		appendCardIconButton(actions, "copy", "Copy quote", () => {
 			void copyQuoteText(text, author, source);
 		});
 
-		card.createEl("p", { cls: "muse-quote-text", text });
+		card.createEl("p", { cls: "clio-quote-text", text });
 
 		const attribution = [author, source].filter(Boolean).join(", ");
 		if (attribution) {
 			card.createDiv({
-				cls: "muse-quote-attribution",
+				cls: "clio-quote-attribution",
 				text: `— ${attribution}`,
 			});
 		}
 
 		if (tags.length > 0) {
-			const tagWrap = card.createDiv({ cls: "muse-quote-tags" });
+			const tagWrap = card.createDiv({ cls: "clio-quote-tags" });
 			for (const tag of tags) {
-				tagWrap.createSpan({ cls: "muse-tag", text: `#${tag}` });
+				tagWrap.createSpan({ cls: "clio-tag", text: `#${tag}` });
 			}
 		}
 	}
@@ -89,7 +89,7 @@ async function copyQuoteText(
 	}
 }
 
-export function registerMuseQuoteBlockProcessor(
+export function registerClioQuoteBlockProcessor(
 	register: (
 		language: string,
 		handler: (
@@ -99,8 +99,15 @@ export function registerMuseQuoteBlockProcessor(
 		) => void,
 	) => void,
 ): void {
-	register("muse-quote", (source, el, ctx) => {
-		const fields = parseMuseQuoteSource(source);
-		ctx.addChild(new MuseQuoteBlockChild(el, fields));
-	});
+	const handler = (
+		source: string,
+		el: HTMLElement,
+		ctx: MarkdownPostProcessorContext,
+	): void => {
+		const fields = parseClioQuoteSource(source);
+		ctx.addChild(new ClioQuoteBlockChild(el, fields));
+	};
+	register("clio-quote", handler);
+	register("muse-quote", handler);
+	register("almanac-quote", handler);
 }

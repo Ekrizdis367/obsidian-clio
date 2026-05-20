@@ -1,22 +1,25 @@
 import { App, TFile, TFolder } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import {
-	MUSE_IGNORE_MARKER,
+	CLIO_IGNORE_MARKER,
 	blockHasIgnoreMarker,
 	extractQuoteContent,
 } from "./parser";
-import { formatMuseQuoteBlock } from "./inbox";
-import { parseMuseQuoteFields } from "../utils/muse-quote";
+import { formatClioQuoteBlock } from "./inbox";
+import {
+	isClioQuoteFenceLang,
+	parseClioQuoteFields,
+} from "../utils/clio-quote";
 
-export type CandidateKind = "blockquote" | "muse-quote";
+export type CandidateKind = "blockquote" | "clio-quote";
 
 /**
  * A single block in the vault that the migration helper wants to
  * surface for review. There are two flavors:
  *
  *  - `blockquote`: a `>` blockquote or quote-callout that hasn't been
- *    structured yet. Conversion replaces it with a `muse-quote` block.
- *  - `muse-quote`: an existing `muse-quote` block whose `quote:` field
+ *    structured yet. Conversion replaces it with a `clio-quote` block.
+ *  - `clio-quote`: an existing `clio-quote` block whose `quote:` field
  *    still contains inline attribution like `"..." — Author`.
  *    Conversion rewrites it with the author/source split into their
  *    own fields.
@@ -100,18 +103,19 @@ function scanRawBlockquotes(content: string): RawBlock[] {
 	return blocks;
 }
 
-/** Marker that suppresses migration prompts for a `muse-quote` block. */
-const MUSE_QUOTE_KEEP_MARKER_RE = /^\s*#\s*muse:keep\s*$/i;
+/** Marker that suppresses migration prompts for a `clio-quote` block. */
+const CLIO_QUOTE_KEEP_MARKER_RE =
+	/^\s*#\s*(?:clio|almanac|muse):keep\s*$/i;
 
-function museQuoteBlockHasKeepMarker(rawLines: readonly string[]): boolean {
+function clioQuoteBlockHasKeepMarker(rawLines: readonly string[]): boolean {
 	for (const line of rawLines) {
-		if (MUSE_QUOTE_KEEP_MARKER_RE.test(line)) return true;
-		if (line.includes(MUSE_IGNORE_MARKER)) return true;
+		if (CLIO_QUOTE_KEEP_MARKER_RE.test(line)) return true;
+		if (line.includes(CLIO_IGNORE_MARKER)) return true;
 	}
 	return false;
 }
 
-interface RawMuseQuoteBlock {
+interface RawClioQuoteBlock {
 	startLine: number;
 	endLine: number;
 	rawLines: string[];
@@ -119,13 +123,13 @@ interface RawMuseQuoteBlock {
 }
 
 /**
- * Variant of `extractMuseQuoteBlocks` that also tracks the raw lines
+ * Variant of `extractClioQuoteBlocks` that also tracks the raw lines
  * and the closing fence's line number, so the converter can replace
  * the entire fenced block precisely.
  */
-function scanRawMuseQuoteBlocks(content: string): RawMuseQuoteBlock[] {
+function scanRawClioQuoteBlocks(content: string): RawClioQuoteBlock[] {
 	const lines = content.split(/\r?\n/);
-	const blocks: RawMuseQuoteBlock[] = [];
+	const blocks: RawClioQuoteBlock[] = [];
 	const fenceRe = /^\s*```\s*(\S*)\s*$/;
 	let blockStart = -1;
 	let buffer: string[] = [];
@@ -157,8 +161,8 @@ function scanRawMuseQuoteBlocks(content: string): RawMuseQuoteBlock[] {
 		}
 
 		if (fence) {
-			const lang = (fence[1] ?? "").toLowerCase();
-			if (lang === "muse-quote") {
+			const lang = fence[1] ?? "";
+			if (isClioQuoteFenceLang(lang)) {
 				blockStart = i;
 				buffer = [];
 			} else {
@@ -174,7 +178,7 @@ function scanRawMuseQuoteBlocks(content: string): RawMuseQuoteBlock[] {
  *
  * Two passes:
  *  1. Bare blockquotes / quote-callouts that aren't structured yet.
- *  2. Existing `muse-quote` blocks where the `quote:` field still
+ *  2. Existing `clio-quote` blocks where the `quote:` field still
  *     carries inline attribution that could be split into a real
  *     `author:` / `source:` pair.
  *
@@ -185,7 +189,7 @@ function scanRawMuseQuoteBlocks(content: string): RawMuseQuoteBlock[] {
  */
 export async function scanForBlockquoteQuotes(
 	app: App,
-	settings: MuseSettings,
+	settings: ClioSettings,
 ): Promise<QuoteCandidate[]> {
 	const files = collectFiles(app, settings.quoteFolders);
 	const out: QuoteCandidate[] = [];
@@ -227,11 +231,11 @@ export async function scanForBlockquoteQuotes(
 			});
 		}
 
-		for (const block of scanRawMuseQuoteBlocks(content)) {
-			if (museQuoteBlockHasKeepMarker(block.rawLines)) continue;
-			const fields = parseMuseQuoteFields(block.innerLines);
+		for (const block of scanRawClioQuoteBlocks(content)) {
+			if (clioQuoteBlockHasKeepMarker(block.rawLines)) continue;
+			const fields = parseClioQuoteFields(block.innerLines);
 			const author = (fields["author"] ?? "").trim();
-			// Only flag muse-quote blocks where the user hasn't already
+			// Only flag clio-quote blocks where the user hasn't already
 			// supplied an author - we don't want to second-guess
 			// intentional edits.
 			if (author) continue;
@@ -241,7 +245,7 @@ export async function scanForBlockquoteQuotes(
 			if (!inline) continue;
 			out.push({
 				file,
-				kind: "muse-quote",
+				kind: "clio-quote",
 				startLine: block.startLine,
 				endLine: block.endLine,
 				rawLines: block.rawLines,
@@ -339,7 +343,7 @@ export interface ConvertOverrides {
 }
 
 /**
- * Replace a candidate's lines with a freshly formatted `muse-quote`
+ * Replace a candidate's lines with a freshly formatted `clio-quote`
  * block. Re-reads the file to verify the original lines are still in
  * place; bails when the file has been edited so we don't scribble over
  * the user's changes.
@@ -361,7 +365,7 @@ export async function convertCandidate(
 		}
 	}
 
-	const block = formatMuseQuoteBlock({
+	const block = formatClioQuoteBlock({
 		text: overrides.text ?? candidate.text,
 		author: overrides.author ?? candidate.author,
 		source: overrides.source ?? candidate.source,
@@ -378,11 +382,11 @@ export async function convertCandidate(
  * Mark a candidate so the migration scanner (and, for blockquotes,
  * the quote indexer) permanently skips it.
  *
- *  - **Blockquote**: appends `%%muse:ignore%%` (an Obsidian inline
+ *  - **Blockquote**: appends `%%clio:ignore%%` (an Obsidian inline
  *    comment) to the last line. Invisible in reading mode. The quote
  *    indexer also respects this marker, so a marked blockquote stops
  *    showing up in the daily / random pickers.
- *  - **muse-quote** block: inserts a `# muse:keep` comment line right
+ *  - **clio-quote** block: inserts a `# clio:keep` comment line right
  *    after the opening fence. The fields parser already ignores
  *    `#`-prefixed lines, so it doesn't change how the block renders.
  *    Indexing isn't affected - the block is still a real quote.
@@ -406,15 +410,15 @@ export async function markCandidateIgnored(
 	if (candidate.kind === "blockquote") {
 		const lastIdx = candidate.endLine;
 		const lastLine = lines[lastIdx] ?? "";
-		if (!lastLine.includes(MUSE_IGNORE_MARKER)) {
-			lines[lastIdx] = `${lastLine.trimEnd()} ${MUSE_IGNORE_MARKER}`;
+		if (!lastLine.includes(CLIO_IGNORE_MARKER)) {
+			lines[lastIdx] = `${lastLine.trimEnd()} ${CLIO_IGNORE_MARKER}`;
 		}
 	} else {
 		// Insert a comment line just after the opening fence. Bail out
 		// if the marker is somehow already present (no-op write would
 		// still move modify timestamps unnecessarily).
-		if (!museQuoteBlockHasKeepMarker(candidate.rawLines)) {
-			lines.splice(candidate.startLine + 1, 0, "# muse:keep");
+		if (!clioQuoteBlockHasKeepMarker(candidate.rawLines)) {
+			lines.splice(candidate.startLine + 1, 0, "# clio:keep");
 		}
 	}
 
@@ -460,16 +464,16 @@ function collectFolder(
 }
 
 /**
- * Build a `muse-quote` block string from a candidate, used by the
+ * Build a `clio-quote` block string from a candidate, used by the
  * migration modal's preview pane so users can see exactly what will
  * land in the file before they commit. Accepts the same overrides
  * shape as {@link convertCandidate} so the preview tracks live edits.
  */
-export function previewMuseQuoteBlock(
+export function previewClioQuoteBlock(
 	candidate: QuoteCandidate,
 	overrides: ConvertOverrides = {},
 ): string {
-	return formatMuseQuoteBlock({
+	return formatClioQuoteBlock({
 		text: overrides.text ?? candidate.text,
 		author: overrides.author ?? candidate.author,
 		source: overrides.source ?? candidate.source,

@@ -39,14 +39,14 @@ class WordRecapBlockChild extends MarkdownRenderChild {
 	private render(): void {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-recap-card",
+			cls: "clio-fact-card clio-recap-card",
 		});
 		createCardHeader(card, "Word recap");
 
 		const entries = this.host.manager.getRecentHistory(this.options.limit);
 		if (entries.length === 0) {
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text:
 					"No history yet. Enable “Track word-of-the-day history” " +
 					"in Muse settings to start collecting your past words.",
@@ -54,37 +54,37 @@ class WordRecapBlockChild extends MarkdownRenderChild {
 			return;
 		}
 
-		const list = card.createEl("ul", { cls: "muse-recap-list" });
+		const list = card.createEl("ul", { cls: "clio-recap-list" });
 		for (const entry of entries) {
-			const item = list.createEl("li", { cls: "muse-recap-item" });
-			const head = item.createDiv({ cls: "muse-recap-head" });
+			const item = list.createEl("li", { cls: "clio-recap-item" });
+			const head = item.createDiv({ cls: "clio-recap-head" });
 			const wordEl = head.createSpan({
-				cls: "muse-recap-word",
+				cls: "clio-recap-word",
 				text: entry.word,
 			});
-			head.createSpan({ cls: "muse-recap-date", text: entry.date });
+			head.createSpan({ cls: "clio-recap-date", text: entry.date });
 			if (entry.partOfSpeech) {
 				head.createSpan({
-					cls: "muse-recap-pos",
+					cls: "clio-recap-pos",
 					text: entry.partOfSpeech,
 				});
 			}
 
 			const defWrap = item.createDiv({
-				cls: "muse-recap-definition",
+				cls: "clio-recap-definition",
 			});
 			defWrap.createSpan({
-				cls: "muse-recap-definition-text",
+				cls: "clio-recap-definition-text",
 				text: entry.definitions[0] ?? "",
 			});
 			let revealed = this.options.revealed;
 			const apply = (): void => {
-				defWrap.toggleClass("muse-recap-hidden", !revealed);
+				defWrap.toggleClass("clio-recap-hidden", !revealed);
 			};
 			apply();
 
 			const toggle = defWrap.createEl("button", {
-				cls: "muse-link-button muse-recap-toggle",
+				cls: "clio-link-button clio-recap-toggle",
 				text: revealed ? "Hide" : "Reveal",
 			});
 			toggle.addEventListener("click", () => {

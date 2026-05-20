@@ -42,14 +42,14 @@ class WordBlockChild extends MarkdownRenderChild {
 
 	private async render(): Promise<void> {
 		this.containerEl.empty();
-		const card = this.containerEl.createDiv({ cls: "muse-word-card" });
+		const card = this.containerEl.createDiv({ cls: "clio-word-card" });
 		try {
 			const today = await this.host.manager.getToday();
 			renderWordCard(card, today, this.host);
 		} catch (err) {
-			console.warn("[muse] word render failed", err);
+			console.warn("[clio] word render failed", err);
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "Could not load today's word.",
 			});
 		}
@@ -65,7 +65,7 @@ function renderWordCard(
 
 	if (!today.word) {
 		card.createDiv({
-			cls: "muse-empty",
+			cls: "clio-empty",
 			text: "No words available. Add some in settings.",
 		});
 		return;
@@ -80,48 +80,48 @@ function renderWordCard(
 		void copyWord(today);
 	});
 
-	const body = card.createDiv({ cls: "muse-word-body" });
+	const body = card.createDiv({ cls: "clio-word-body" });
 	body.createEl("h3", {
-		cls: "muse-word-title",
+		cls: "clio-word-title",
 		text: today.word,
 	});
 
 	if (today.phonetic || today.partOfSpeech) {
-		const meta = body.createDiv({ cls: "muse-word-meta" });
+		const meta = body.createDiv({ cls: "clio-word-meta" });
 		if (today.phonetic) {
 			meta.createSpan({
-				cls: "muse-word-phonetic",
+				cls: "clio-word-phonetic",
 				text: today.phonetic,
 			});
 		}
 		if (today.partOfSpeech) {
 			meta.createSpan({
-				cls: "muse-word-pos",
+				cls: "clio-word-pos",
 				text: today.partOfSpeech,
 			});
 		}
 	}
 
-	const content = body.createDiv({ cls: "muse-word-content" });
+	const content = body.createDiv({ cls: "clio-word-content" });
 	if (!today.fetched) {
 		content.createDiv({
-			cls: "muse-word-loading",
+			cls: "clio-word-loading",
 			text: "Looking up definition…",
 		});
 	} else if (today.definitions.length === 0) {
 		content.createDiv({
-			cls: "muse-word-loading",
+			cls: "clio-word-loading",
 			text: "No definition available - try the dictionary online.",
 		});
 	} else {
-		const list = content.createEl("ol", { cls: "muse-word-defs" });
+		const list = content.createEl("ol", { cls: "clio-word-defs" });
 		for (const def of today.definitions) {
 			list.createEl("li", { text: def });
 		}
 		if (today.examples.length > 0) {
-			const examples = content.createDiv({ cls: "muse-word-examples" });
+			const examples = content.createDiv({ cls: "clio-word-examples" });
 			examples.createDiv({
-				cls: "muse-word-examples-label",
+				cls: "clio-word-examples-label",
 				text: "Examples",
 			});
 			const ul = examples.createEl("ul");

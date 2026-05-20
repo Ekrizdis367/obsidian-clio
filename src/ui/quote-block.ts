@@ -7,7 +7,7 @@ import {
 } from "obsidian";
 import type { Quote } from "../types";
 import type { QuoteStore } from "../quotes/store";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import {
 	applyQuoteFilters,
 	formatAttribution,
@@ -22,7 +22,7 @@ import {
 export interface QuoteBlockHost {
 	app: App;
 	store: QuoteStore;
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 }
 
 interface BlockOptions {
@@ -78,7 +78,7 @@ class QuoteBlockChild extends MarkdownRenderChild {
 
 	private render(): void {
 		this.containerEl.empty();
-		const card = this.containerEl.createDiv({ cls: "muse-quote-card" });
+		const card = this.containerEl.createDiv({ cls: "clio-quote-card" });
 		const all = this.host.store.getAll();
 		const settings = this.host.getSettings();
 		const allowed = applyQuoteFilters(all, settings);
@@ -92,7 +92,7 @@ class QuoteBlockChild extends MarkdownRenderChild {
 					);
 		if (filtered.length === 0) {
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text:
 					this.opts.tags.length > 0
 						? `No quotes match tags: ${this.opts.tags
@@ -101,7 +101,7 @@ class QuoteBlockChild extends MarkdownRenderChild {
 						: all.length === 0
 							? "No quotes found in your vault yet. Add one with the Add quote command."
 							: settings.requireQuoteAuthor
-								? "No attributed quotes found. Add an \u201cauthor:\u201d field to your muse-quote blocks (or an \u201c\u2014 Author\u201d line to blockquotes), or turn off \u201cRequire author\u201d in plugin settings."
+								? "No attributed quotes found. Add an \u201cauthor:\u201d field to your clio-quote blocks (or an \u201c\u2014 Author\u201d line to blockquotes), or turn off \u201cRequire author\u201d in plugin settings."
 								: "No quotes available right now.",
 			});
 			return;
@@ -129,21 +129,21 @@ function renderQuoteCard(
 	});
 
 	card.createEl("p", {
-		cls: "muse-quote-text",
+		cls: "clio-quote-text",
 		text: quote.text,
 	});
 	const attribution = formatAttribution(quote);
 	if (attribution) {
 		card.createDiv({
-			cls: "muse-quote-attribution",
+			cls: "clio-quote-attribution",
 			text: `— ${attribution}`,
 		});
 	}
 	if (quote.tags.length > 0) {
-		const tagWrap = card.createDiv({ cls: "muse-quote-tags" });
+		const tagWrap = card.createDiv({ cls: "clio-quote-tags" });
 		for (const tag of quote.tags) {
 			tagWrap.createSpan({
-				cls: "muse-tag",
+				cls: "clio-tag",
 				text: `#${tag}`,
 			});
 		}

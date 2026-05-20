@@ -43,15 +43,15 @@ class PromptBlockChild extends MarkdownRenderChild {
 	private async render(): Promise<void> {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-prompt-card",
+			cls: "clio-fact-card clio-prompt-card",
 		});
 		try {
 			const today = await this.host.manager.getToday();
 			renderCard(card, today, this.host);
 		} catch (err) {
-			console.warn("[muse] prompt render failed", err);
+			console.warn("[clio] prompt render failed", err);
 			card.createDiv({
-				cls: "muse-empty",
+				cls: "clio-empty",
 				text: "Could not load today's prompt.",
 			});
 		}
@@ -67,7 +67,7 @@ function renderCard(
 
 	if (!today.text) {
 		card.createDiv({
-			cls: "muse-empty",
+			cls: "clio-empty",
 			text: "No prompts available. Add custom prompts in Muse settings.",
 		});
 		return;
@@ -90,7 +90,7 @@ function renderCard(
 		);
 	});
 
-	card.createEl("p", { cls: "muse-prompt-text", text: today.text });
+	card.createEl("p", { cls: "clio-prompt-text", text: today.text });
 }
 
 export function registerPromptBlockProcessor(

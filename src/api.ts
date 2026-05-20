@@ -31,9 +31,9 @@ import {
  * Public API for templater / dataview.
  *
  * Stable across patch releases - prefer extending it over breaking the
- * existing surface. Available at `app.plugins.plugins["muse"].api`.
+ * existing surface. Available at `app.plugins.plugins["clio"].api`.
  */
-export interface MuseApi {
+export interface ClioApi {
 	getQuoteOfTheDay(): Quote | null;
 	getRandomQuote(): Quote | null;
 	getQuoteOfTheDayMarkdown(): string;
@@ -90,7 +90,7 @@ export function createApi(
 	intentions: IntentionsManager,
 	prompts: PromptManager,
 	journal: JournalManager,
-): MuseApi {
+): ClioApi {
 	const dailyQuote = (): Quote | null => quoteOfTheDay(store.getAll());
 	const aRandomQuote = (): Quote | null => randomQuote(store.getAll());
 	return {

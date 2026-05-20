@@ -44,14 +44,14 @@ class OneLineJournalBlockChild extends MarkdownRenderChild {
 	private render(): void {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-journal-card",
+			cls: "clio-fact-card clio-journal-card",
 		});
 
 		createCardHeader(card, "One-line journal");
 
-		const editor = card.createDiv({ cls: "muse-journal-editor" });
+		const editor = card.createDiv({ cls: "clio-journal-editor" });
 		const input = editor.createEl("input", {
-			cls: "muse-journal-input",
+			cls: "clio-journal-input",
 			attr: {
 				type: "text",
 				placeholder: "What mattered today?",
@@ -61,7 +61,7 @@ class OneLineJournalBlockChild extends MarkdownRenderChild {
 		input.value = this.host.manager.getEntry(this.options.date);
 
 		const status = editor.createDiv({
-			cls: "muse-journal-status",
+			cls: "clio-journal-status",
 			text: "",
 		});
 
@@ -91,23 +91,23 @@ class OneLineJournalBlockChild extends MarkdownRenderChild {
 			);
 			if (past.length > 0) {
 				const list = card.createEl("ul", {
-					cls: "muse-journal-history",
+					cls: "clio-journal-history",
 				});
 				for (const entry of past) {
-					const li = list.createEl("li", { cls: "muse-journal-history-item" });
+					const li = list.createEl("li", { cls: "clio-journal-history-item" });
 					li.createSpan({
-						cls: "muse-journal-history-year",
+						cls: "clio-journal-history-year",
 						text: `${entry.year}`,
 					});
 					li.createSpan({
-						cls: "muse-journal-history-ago",
+						cls: "clio-journal-history-ago",
 						text:
 							entry.yearsAgo === 1
 								? "1 year ago"
 								: `${entry.yearsAgo} years ago`,
 					});
 					li.createSpan({
-						cls: "muse-journal-history-text",
+						cls: "clio-journal-history-text",
 						text: entry.text,
 					});
 				}

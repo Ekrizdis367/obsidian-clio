@@ -1,6 +1,6 @@
 import { App, Events, TFile, TFolder, debounce } from "obsidian";
 import type { Quote } from "../types";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import { parseQuotesFromMarkdown } from "./parser";
 
 /**
@@ -15,7 +15,7 @@ export class QuoteStore extends Events {
 
 	constructor(
 		private readonly app: App,
-		private readonly getSettings: () => MuseSettings,
+		private readonly getSettings: () => ClioSettings,
 	) {
 		super();
 	}

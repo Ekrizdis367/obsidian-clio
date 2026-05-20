@@ -1,14 +1,14 @@
 /**
  * Static markdown renderers for each daily card.
  *
- * Used by the public {@link MuseApi} so Templater / Dataview users can
+ * Used by the public {@link ClioApi} so Templater / Dataview users can
  * drop a self-contained snapshot of a card into a note with a single
  * API call - no live code block, no future re-render.
  *
- * Each helper emits a `muse-static` code block whose body is YAML with
+ * Each helper emits a `clio-static` code block whose body is YAML with
  * the card's data baked in. The code block is rendered by
  * `src/ui/static-block.ts` using the same DOM and CSS classes as the
- * live cards (`.muse-quote-card`, `.muse-word-card`, etc.) so the drop
+ * live cards (`.clio-quote-card`, `.clio-word-card`, etc.) so the drop
  * looks identical to the live block - except the data is frozen in the
  * file forever, so reopening the note tomorrow shows the same content.
  *
@@ -27,7 +27,7 @@ import type {
 } from "../types";
 
 /**
- * Wrap a YAML body in a `muse-static` fenced code block. The fence
+ * Wrap a YAML body in a `clio-static` fenced code block. The fence
  * length adapts to the body so embedded backticks never break the
  * codeblock.
  *
@@ -46,10 +46,10 @@ function staticBlock(data: Record<string, unknown>): string {
 		0,
 	);
 	const fence = "`".repeat(Math.max(3, longestRun + 1));
-	return `${fence}muse-static\n${yaml}\n${fence}\n`;
+	return `${fence}clio-static\n${yaml}\n${fence}\n`;
 }
 
-/** Today's quote, frozen as a `muse-static` code block. */
+/** Today's quote, frozen as a `clio-static` code block. */
 export function quoteToCalloutMarkdown(quote: Quote): string {
 	if (!quote?.text) return "";
 	const data: Record<string, unknown> = {
@@ -62,7 +62,7 @@ export function quoteToCalloutMarkdown(quote: Quote): string {
 	return staticBlock(data);
 }
 
-/** Word of the day, frozen as a `muse-static` code block. */
+/** Word of the day, frozen as a `clio-static` code block. */
 export function wordRecordToMarkdown(record: DailyWordRecord): string {
 	if (!record?.word) return "";
 	const data: Record<string, unknown> = {
@@ -78,7 +78,7 @@ export function wordRecordToMarkdown(record: DailyWordRecord): string {
 	return staticBlock(data);
 }
 
-/** "On this day" event, frozen as a `muse-static` code block. */
+/** "On this day" event, frozen as a `clio-static` code block. */
 export function factRecordToMarkdown(record: DailyFactRecord): string {
 	if (!record?.text) return "";
 	const data: Record<string, unknown> = {
@@ -91,7 +91,7 @@ export function factRecordToMarkdown(record: DailyFactRecord): string {
 	return staticBlock(data);
 }
 
-/** Today's featured Wikipedia article, frozen as a `muse-static` block. */
+/** Today's featured Wikipedia article, frozen as a `clio-static` block. */
 export function featuredArticleToMarkdown(
 	record: FeaturedArticleRecord,
 ): string {
@@ -105,14 +105,14 @@ export function featuredArticleToMarkdown(
 	return staticBlock(data);
 }
 
-/** Reflection prompt, frozen as a `muse-static` code block. */
+/** Reflection prompt, frozen as a `clio-static` code block. */
 export function promptRecordToMarkdown(record: DailyPromptRecord): string {
 	if (!record?.text) return "";
 	return staticBlock({ type: "prompt", text: record.text });
 }
 
 /**
- * Today's intentions, frozen as a `muse-static` code block.
+ * Today's intentions, frozen as a `clio-static` code block.
  *
  * Always emits a block so the card is visible in the daily note even
  * when the user hasn't configured any intentions yet - the renderer
@@ -127,7 +127,7 @@ export function intentionsToMarkdown(items: readonly Intention[]): string {
 	});
 }
 
-/** Past-year journal entries for today, frozen as a `muse-static` block. */
+/** Past-year journal entries for today, frozen as a `clio-static` block. */
 export function journalAcrossYearsToMarkdown(
 	entries: readonly { year: number; yearsAgo: number; text: string }[],
 ): string {

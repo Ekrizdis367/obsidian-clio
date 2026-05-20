@@ -1,9 +1,9 @@
 import { Events } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import { todayLocalIso } from "../utils/date";
 
 export interface JournalManagerHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	save(): Promise<void>;
 }
 

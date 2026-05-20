@@ -3,7 +3,7 @@ import {
 	MarkdownRenderChild,
 	setTooltip,
 } from "obsidian";
-import type { MuseSettings } from "../settings";
+import type { ClioSettings } from "../settings";
 import { calculateMoonPhase } from "../sky/moon";
 import {
 	calculateSunTimes,
@@ -28,7 +28,7 @@ function formatShortDate(date: Date): string {
 }
 
 export interface SkyBlockHost {
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 }
 
 class SkyBlockChild extends MarkdownRenderChild {
@@ -46,7 +46,7 @@ class SkyBlockChild extends MarkdownRenderChild {
 	private render(): void {
 		this.containerEl.empty();
 		const card = this.containerEl.createDiv({
-			cls: "muse-fact-card muse-sky-card",
+			cls: "clio-fact-card clio-sky-card",
 		});
 
 		const settings = this.host.getSettings();
@@ -64,27 +64,27 @@ class SkyBlockChild extends MarkdownRenderChild {
 			this.renderDaylight(card, sun, now);
 		}
 
-		const meta = card.createDiv({ cls: "muse-sky-meta" });
+		const meta = card.createDiv({ cls: "clio-sky-meta" });
 		if (sun) {
 			if (sun.midnightSun) {
 				meta.createSpan({
-					cls: "muse-sky-meta-note",
+					cls: "clio-sky-meta-note",
 					text: "Midnight sun today",
 				});
 			} else if (sun.polarNight) {
 				meta.createSpan({
-					cls: "muse-sky-meta-note",
+					cls: "clio-sky-meta-note",
 					text: "Polar night today",
 				});
 			} else if (sun.dayLengthMinutes !== null) {
 				meta.createSpan({
-					cls: "muse-sky-day-length",
+					cls: "clio-sky-day-length",
 					text: `${formatDayLength(sun.dayLengthMinutes)} of daylight`,
 				});
 			}
 		} else {
 			meta.createSpan({
-				cls: "muse-sky-meta-note",
+				cls: "clio-sky-meta-note",
 				text: "Pick your country in the plugin settings for sun times",
 			});
 		}
@@ -101,7 +101,7 @@ class SkyBlockChild extends MarkdownRenderChild {
 		const phase = calculateMoonPhase(now);
 		const illuminationPct = Math.round(phase.illumination * 100);
 
-		const grid = card.createDiv({ cls: "muse-sky-symbolic" });
+		const grid = card.createDiv({ cls: "clio-sky-symbolic" });
 
 		this.renderSymbolicColumn(grid, {
 			glyph: "☉",
@@ -118,7 +118,7 @@ class SkyBlockChild extends MarkdownRenderChild {
 		 */
 		this.renderSymbolicColumn(grid, {
 			glyph: phase.emoji,
-			glyphClass: "muse-sky-symbolic-glyph--emoji",
+			glyphClass: "clio-sky-symbolic-glyph--emoji",
 			glyphTooltip: `${phase.name} · ${illuminationPct}% illuminated`,
 			planet: "Moon",
 			sign: moon.sign.name,
@@ -138,7 +138,7 @@ class SkyBlockChild extends MarkdownRenderChild {
 			planet: "Mercury",
 			sign: mercury.sign.name,
 			extra: rx.isRetrograde ? "Retrograde" : "Direct",
-			extraClass: rx.isRetrograde ? "muse-sky-symbolic-extra--rx" : undefined,
+			extraClass: rx.isRetrograde ? "clio-sky-symbolic-extra--rx" : undefined,
 			extraTooltip: mercuryTooltip,
 		});
 	}
@@ -156,26 +156,26 @@ class SkyBlockChild extends MarkdownRenderChild {
 			extraTooltip?: string;
 		},
 	): void {
-		const col = parent.createDiv({ cls: "muse-sky-symbolic-col" });
+		const col = parent.createDiv({ cls: "clio-sky-symbolic-col" });
 
-		const planet = col.createDiv({ cls: "muse-sky-symbolic-planet" });
+		const planet = col.createDiv({ cls: "clio-sky-symbolic-planet" });
 		const glyphCls = opts.glyphClass
-			? `muse-sky-symbolic-glyph ${opts.glyphClass}`
-			: "muse-sky-symbolic-glyph";
+			? `clio-sky-symbolic-glyph ${opts.glyphClass}`
+			: "clio-sky-symbolic-glyph";
 		const glyph = planet.createSpan({ cls: glyphCls, text: opts.glyph });
 		if (opts.glyphTooltip) {
 			setTooltip(glyph, opts.glyphTooltip);
 		}
 		planet.createSpan({
-			cls: "muse-sky-symbolic-planet-name",
+			cls: "clio-sky-symbolic-planet-name",
 			text: opts.planet,
 		});
 
-		col.createDiv({ cls: "muse-sky-symbolic-sign", text: opts.sign });
+		col.createDiv({ cls: "clio-sky-symbolic-sign", text: opts.sign });
 
 		const extraClass = opts.extraClass
-			? `muse-sky-symbolic-extra ${opts.extraClass}`
-			: "muse-sky-symbolic-extra";
+			? `clio-sky-symbolic-extra ${opts.extraClass}`
+			: "clio-sky-symbolic-extra";
 		const extra = col.createDiv({ cls: extraClass, text: opts.extra });
 		if (opts.extraTooltip) {
 			setTooltip(extra, opts.extraTooltip);
@@ -185,17 +185,17 @@ class SkyBlockChild extends MarkdownRenderChild {
 	private renderDaylight(card: HTMLElement, sun: SunTimes, now: Date): void {
 		if (!sun.sunrise || !sun.sunset) return;
 
-		const day = card.createDiv({ cls: "muse-sky-day" });
+		const day = card.createDiv({ cls: "clio-sky-day" });
 
-		const sunriseEl = day.createDiv({ cls: "muse-sky-day-time" });
-		sunriseEl.createSpan({ cls: "muse-sky-day-icon", text: "☀️" });
+		const sunriseEl = day.createDiv({ cls: "clio-sky-day-time" });
+		sunriseEl.createSpan({ cls: "clio-sky-day-icon", text: "☀️" });
 		sunriseEl.createSpan({
-			cls: "muse-sky-day-time-value",
+			cls: "clio-sky-day-time-value",
 			text: formatLocalTime(sun.sunrise),
 		});
 
-		const bar = day.createDiv({ cls: "muse-sky-day-bar" });
-		bar.createDiv({ cls: "muse-sky-day-bar-track" });
+		const bar = day.createDiv({ cls: "clio-sky-day-bar" });
+		bar.createDiv({ cls: "clio-sky-day-bar-track" });
 
 		const dur = sun.sunset.getTime() - sun.sunrise.getTime();
 		let progress = 0;
@@ -203,9 +203,9 @@ class SkyBlockChild extends MarkdownRenderChild {
 			const elapsed = now.getTime() - sun.sunrise.getTime();
 			progress = Math.max(0, Math.min(1, elapsed / dur));
 		}
-		const marker = bar.createDiv({ cls: "muse-sky-day-bar-marker" });
+		const marker = bar.createDiv({ cls: "clio-sky-day-bar-marker" });
 		marker.setCssProps({
-			"--muse-sky-progress": `${(progress * 100).toFixed(1)}%`,
+			"--clio-sky-progress": `${(progress * 100).toFixed(1)}%`,
 		});
 		const beforeSunrise = now.getTime() < sun.sunrise.getTime();
 		const afterSunset = now.getTime() > sun.sunset.getTime();
@@ -213,10 +213,10 @@ class SkyBlockChild extends MarkdownRenderChild {
 			marker.addClass("is-night");
 		}
 
-		const sunsetEl = day.createDiv({ cls: "muse-sky-day-time" });
-		sunsetEl.createSpan({ cls: "muse-sky-day-icon", text: "🌙" });
+		const sunsetEl = day.createDiv({ cls: "clio-sky-day-time" });
+		sunsetEl.createSpan({ cls: "clio-sky-day-icon", text: "🌙" });
 		sunsetEl.createSpan({
-			cls: "muse-sky-day-time-value",
+			cls: "clio-sky-day-time-value",
 			text: formatLocalTime(sun.sunset),
 		});
 	}

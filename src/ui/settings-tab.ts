@@ -5,7 +5,7 @@ import {
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
-import { MAX_INTENTIONS, type MuseSettings } from "../settings";
+import { MAX_INTENTIONS, type ClioSettings } from "../settings";
 import type { QuoteStore } from "../quotes/store";
 import type { WordManager } from "../words/manager";
 import type { WikipediaManager } from "../wikipedia/manager";
@@ -23,7 +23,7 @@ import {
 
 export interface SettingsHost {
 	app: App;
-	getSettings(): MuseSettings;
+	getSettings(): ClioSettings;
 	saveSettings(): Promise<void>;
 	store: QuoteStore;
 	manager: WordManager;
@@ -33,7 +33,7 @@ export interface SettingsHost {
 	journal: JournalManager;
 }
 
-export class MuseSettingsTab extends PluginSettingTab {
+export class ClioSettingsTab extends PluginSettingTab {
 	constructor(
 		plugin: Plugin,
 		private readonly host: SettingsHost,
@@ -98,7 +98,7 @@ export class MuseSettingsTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Require author")
 			.setDesc(
-				"Only show quotes that have an author. \u201cmuse-quote\u201d blocks need a non-empty \u201cauthor:\u201d field; bare blockquotes need an \u201c\u2014 author\u201d attribution line. Quotes without attribution are skipped by the daily and random pickers.",
+				"Only show quotes that have an author. \u201cclio-quote\u201d blocks need a non-empty \u201cauthor:\u201d field; bare blockquotes need an \u201c\u2014 author\u201d attribution line. Quotes without attribution are skipped by the daily and random pickers.",
 			)
 			.addToggle((toggle) =>
 				toggle
@@ -112,20 +112,20 @@ export class MuseSettingsTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Quote source")
 			.setDesc(
-				"What counts as a quote when scanning your notes. \u201cmuse-quote\u201d code blocks are always indexed; this setting picks what else gets scooped up.",
+				"What counts as a quote when scanning your notes. \u201cclio-quote\u201d code blocks are always indexed; this setting picks what else gets scooped up.",
 			)
 			.addDropdown((dd) =>
 				dd
 					.addOptions({
-						"muse-quote": "muse-quote blocks only (recommended)",
-						blockquotes: "muse-quote blocks + plain blockquotes",
-						callouts: "muse-quote blocks + quote callouts",
-						both: "muse-quote blocks + blockquotes + callouts",
+						"clio-quote": "clio-quote blocks only (recommended)",
+						blockquotes: "clio-quote blocks + plain blockquotes",
+						callouts: "clio-quote blocks + quote callouts",
+						both: "clio-quote blocks + blockquotes + callouts",
 					})
 					.setValue(this.host.getSettings().quoteSource)
 					.onChange(async (value) => {
 						this.host.getSettings().quoteSource =
-							value as MuseSettings["quoteSource"];
+							value as ClioSettings["quoteSource"];
 						await this.host.saveSettings();
 						await this.host.store.refresh();
 					}),
@@ -445,7 +445,7 @@ export class MuseSettingsTab extends PluginSettingTab {
 		new Setting(containerEl).setName("One-line journal").setHeading();
 
 		new Setting(containerEl).setDesc(
-			"A single short line per day, stored locally in Muse's data file. " +
+			"A single short line per day, stored locally in Clio's data file. " +
 				"Insert a `one-line-journal` code block to write today's entry " +
 				"and (optionally) see entries from the same day in past years.",
 		);

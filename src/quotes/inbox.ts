@@ -8,9 +8,9 @@ export interface NewQuoteInput {
 }
 
 /**
- * Append a quote to the configured inbox file as a `muse-quote` code
+ * Append a quote to the configured inbox file as a `clio-quote` code
  * block. Creates the file (and any missing folders) on first use. The
- * `muse-quote` format is the canonical authoring format and is always
+ * `clio-quote` format is the canonical authoring format and is always
  * indexed regardless of the user's `quoteSource` setting.
  */
 export async function appendQuoteToInbox(
@@ -27,7 +27,7 @@ export async function appendQuoteToInbox(
 	const path = normalizePath(inboxPath);
 	const file = await ensureFile(app, path);
 	const existing = await app.vault.read(file);
-	const block = formatMuseQuoteBlock({ ...input, text });
+	const block = formatClioQuoteBlock({ ...input, text });
 	const next =
 		existing.trimEnd().length === 0
 			? `${block}\n`
@@ -36,14 +36,14 @@ export async function appendQuoteToInbox(
 }
 
 /**
- * Render a quote as the canonical `muse-quote` code block. We
+ * Render a quote as the canonical `clio-quote` code block. We
  * deliberately write `quote:` on a single line (no soft wrapping) so
  * users can easily select-and-copy the value, and so multi-line quote
  * text is preserved exactly when the file is round-tripped through the
  * parser.
  */
-export function formatMuseQuoteBlock(input: NewQuoteInput): string {
-	const lines = ["```muse-quote", `quote: ${oneLine(input.text)}`];
+export function formatClioQuoteBlock(input: NewQuoteInput): string {
+	const lines = ["```clio-quote", `quote: ${oneLine(input.text)}`];
 	const author = input.author.trim();
 	if (author) lines.push(`author: ${author}`);
 	const source = input.source.trim();
